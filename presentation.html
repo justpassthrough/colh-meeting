@@ -451,11 +451,11 @@ body.show-hint .kb-hint { opacity: 0.95; }
 }
 
 /* MARCO slide: give table more horizontal space */
-#s14 .trial-grid { grid-template-columns: 2.3fr 1fr; gap: clamp(0.85rem, 2vw, 1.75rem); }
-#s14 .pivot-callout { padding: clamp(0.85rem, 2vw, 1.35rem); gap: 0.5rem; }
-#s14 .pivot-callout .pc-title { font-size: var(--h3-size); }
-#s14 .pivot-callout .pc-body { font-size: var(--xs-size); }
-#s14 .pivot-callout .pc-big { font-size: clamp(1.65rem, 4.2vw, 2.75rem); margin-top: 0.2rem; }
+#s16 .trial-grid { grid-template-columns: 2.3fr 1fr; gap: clamp(0.85rem, 2vw, 1.75rem); }
+#s16 .pivot-callout { padding: clamp(0.85rem, 2vw, 1.35rem); gap: 0.5rem; }
+#s16 .pivot-callout .pc-title { font-size: var(--h3-size); }
+#s16 .pivot-callout .pc-body { font-size: var(--xs-size); }
+#s16 .pivot-callout .pc-big { font-size: clamp(1.65rem, 4.2vw, 2.75rem); margin-top: 0.2rem; }
 
 .pivot-callout {
     padding: clamp(1.25rem, 2.5vw, 1.75rem);
@@ -639,7 +639,7 @@ body.show-hint .kb-hint { opacity: 0.95; }
 #s10 .ngl-wrap { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(1rem, 3vw, 2rem); flex: 1; min-height: 0; }
 .ngl-left { display: flex; flex-direction: column; gap: clamp(0.6rem, 1.5vh, 1rem); min-height: 0; }
 .ngl-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-.ngl-btn {
+.ngl-btn, .ngl-btn-marco {
     padding: clamp(0.5rem, 1vh, 0.75rem) clamp(0.85rem, 1.7vw, 1.4rem);
     background: var(--bg-soft); border: 2px solid var(--border-soft);
     color: var(--text-dark); cursor: pointer;
@@ -647,12 +647,12 @@ body.show-hint .kb-hint { opacity: 0.95; }
     border-radius: 4px; transition: all 0.2s ease;
     font-weight: 700;
 }
-.ngl-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
-.ngl-btn.active {
+.ngl-btn:hover, .ngl-btn-marco:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+.ngl-btn.active, .ngl-btn-marco.active {
     background: var(--accent-blue); color: var(--text-light);
     border-color: var(--accent-blue);
 }
-#ngl-stage {
+#ngl-stage, #ngl-stage-marco {
     flex: 1; min-height: 0;
     background: #fafafa; border: 1px solid var(--border-soft); border-radius: 6px;
 }
@@ -899,40 +899,40 @@ body.show-hint .kb-hint { opacity: 0.95; }
 /* ===========================================
    SLIDE 12 — Q&A
    =========================================== */
-#s16 { display: grid; grid-template-rows: 1fr auto; padding: 0; }
-#s16 .qa-main {
+#s19 { display: grid; grid-template-rows: 1fr auto; padding: 0; }
+#s19 .qa-main {
     background: var(--bg-white);
     padding: var(--slide-padding);
     display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
 }
-#s16 .qa-foot {
+#s19 .qa-foot {
     background: var(--bg-dark); color: var(--text-light);
     padding: clamp(1.5rem, 3vw, 2.5rem) var(--slide-padding);
     border-top: 6px solid var(--accent-blue);
 }
-#s16 h1 {
+#s19 h1 {
     font-size: var(--title-size); color: var(--text-dark);
     letter-spacing: -0.035em;
 }
-#s16 h1 .em { color: var(--accent-blue); }
-#s16 .qa-divider {
+#s19 h1 .em { color: var(--accent-blue); }
+#s19 .qa-divider {
     margin: clamp(1rem, 3vh, 2rem) auto;
     width: clamp(4rem, 10vw, 8rem); height: 3px;
     background: var(--accent-blue);
 }
-#s16 .qa-sub {
+#s19 .qa-sub {
     font-size: var(--h3-size); color: var(--text-mid); font-weight: 400;
 }
-#s16 .sources-title {
+#s19 .sources-title {
     font-size: var(--xs-size); letter-spacing: 0.2em; text-transform: uppercase;
     color: var(--accent-blue-soft); font-weight: 700; margin-bottom: 0.75rem;
     font-family: 'JetBrains Mono', monospace;
 }
-#s16 .sources {
+#s19 .sources {
     font-family: 'JetBrains Mono', monospace; font-size: var(--small-size);
     color: var(--text-light-dim); line-height: 1.8; max-width: min(80ch, 90vw);
 }
-#s16 .sources .src-label { color: var(--accent-blue-soft); font-weight: 600; }
+#s19 .sources .src-label { color: var(--accent-blue-soft); font-weight: 600; }
 
 /* ===========================================
    ANIMATIONS — STAGGERED REVEAL
@@ -996,7 +996,7 @@ body.show-hint .kb-hint { opacity: 0.95; }
   <div class="slide-inner">
     <div class="slide-header" data-reveal>
       <div class="slide-eyebrow">한 줄 요약</div>
-      <div class="slide-meta">02 / 16</div>
+      <div class="slide-meta">02 / 19</div>
     </div>
     <div class="stats-hero">
       <div class="stat-big" data-reveal="2">
@@ -1032,7 +1032,7 @@ body.show-hint .kb-hint { opacity: 0.95; }
   <div class="slide-inner">
     <div class="slide-header" data-reveal>
       <div class="slide-eyebrow">노선 변경 · Pipeline Pivot</div>
-      <div class="slide-meta">03 / 16</div>
+      <div class="slide-meta">03 / 19</div>
     </div>
     <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.75rem,2vh,1.25rem);">RFdiffusion → <span class="em">BindCraft</span></h2>
     <div class="compare-grid">
@@ -1070,7 +1070,7 @@ body.show-hint .kb-hint { opacity: 0.95; }
   <div class="slide-inner">
     <div class="slide-header" data-reveal>
       <div class="slide-eyebrow">Modular Assembly</div>
-      <div class="slide-meta">04 / 16</div>
+      <div class="slide-meta">04 / 19</div>
     </div>
     <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.5rem,1.5vh,1rem);">독립 발현 후 <span class="em">SpyTag/SpyCatcher</span> 결합</h2>
     <div class="modular-wrap">
@@ -1110,7 +1110,7 @@ body.show-hint .kb-hint { opacity: 0.95; }
   <div class="slide-inner">
     <div class="slide-header" data-reveal>
       <div class="slide-eyebrow">Tag / Linker 설계</div>
-      <div class="slide-meta">05 / 16</div>
+      <div class="slide-meta">05 / 19</div>
     </div>
     <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.75rem,2vh,1.25rem);">세 가지 <span class="em">발현 모듈</span></h2>
     <div class="tag-list">
@@ -1144,7 +1144,7 @@ body.show-hint .kb-hint { opacity: 0.95; }
   <div class="slide-inner">
     <div class="slide-header" data-reveal>
       <div class="slide-eyebrow">BindCraft Trial 종합</div>
-      <div class="slide-meta">06 / 16</div>
+      <div class="slide-meta">06 / 19</div>
     </div>
     <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.75rem,2vh,1.25rem);">Holo → <span class="em">apo</span> 전환의 결정적 효과</h2>
     <div class="trial-grid">
@@ -1177,7 +1177,7 @@ body.show-hint .kb-hint { opacity: 0.95; }
   <div class="slide-inner">
     <div class="slide-header" data-reveal>
       <div class="slide-eyebrow">AF3 Cross-Prediction</div>
-      <div class="slide-meta">07 / 16</div>
+      <div class="slide-meta">07 / 19</div>
     </div>
     <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.5rem,1.5vh,1rem);">독립 검증으로 <span class="em">37개</span> 신뢰 후보</h2>
     <div class="af3-grid">
@@ -1213,7 +1213,7 @@ body.show-hint .kb-hint { opacity: 0.95; }
   <div class="slide-inner">
     <div class="slide-header" data-reveal>
       <div class="slide-eyebrow">Top 10 정량 비교</div>
-      <div class="slide-meta">08 / 16</div>
+      <div class="slide-meta">08 / 19</div>
     </div>
     <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.5rem,1.5vh,1rem);">BindCraft <span class="em">+</span> AF3 양쪽 점수</h2>
     <div class="top10-table-wrap" data-reveal="3">
@@ -1252,7 +1252,7 @@ body.show-hint .kb-hint { opacity: 0.95; }
   <div class="slide-inner">
     <div class="slide-header" data-reveal>
       <div class="slide-eyebrow">Top 5 Overview · ChimeraX renders</div>
-      <div class="slide-meta">09 / 16</div>
+      <div class="slide-meta">09 / 19</div>
     </div>
     <div class="top5-grid" data-reveal="2">
       <div class="binder-card"><img src="renders/binder1_render.png" alt="Rank 1"><div class="b-rank">Rank 1</div><div class="b-name">l96_s354818</div><div class="b-stats">BC <span class="v">0.90</span> · AF3 <span class="v">0.93</span><br>ΔG <span class="v">−63.5</span> · 96 aa</div></div>
@@ -1286,7 +1286,7 @@ body.show-hint .kb-hint { opacity: 0.95; }
   <div class="slide-inner">
     <div class="slide-header" data-reveal>
       <div class="slide-eyebrow">Top 5 · Interactive Structure</div>
-      <div class="slide-meta">10 / 16</div>
+      <div class="slide-meta">10 / 19</div>
     </div>
     <div class="ngl-wrap">
       <div class="ngl-left" data-reveal="2">
@@ -1322,7 +1322,7 @@ body.show-hint .kb-hint { opacity: 0.95; }
   <div class="slide-inner">
     <div class="slide-header" data-reveal>
       <div class="slide-eyebrow">Phase 1 · 다음 단계</div>
-      <div class="slide-meta">11 / 16</div>
+      <div class="slide-meta">11 / 19</div>
     </div>
     <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.5rem,1.5vh,1rem);">Cloning + 발현 <span class="em">스크리닝</span></h2>
     <div class="clone-grid">
@@ -1397,7 +1397,7 @@ body.show-hint .kb-hint { opacity: 0.95; }
   <div class="slide-inner">
     <div class="slide-header" data-reveal>
       <div class="slide-eyebrow">Binder gene 설계 · Vector – His8 – TEV</div>
-      <div class="slide-meta">12 / 16</div>
+      <div class="slide-meta">12 / 19</div>
     </div>
     <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.5rem,1.5vh,1rem);">단일 primer로 <span class="em">5 binder 일괄 cloning</span></h2>
     <div class="construct-box" data-reveal="3">
@@ -1440,7 +1440,7 @@ body.show-hint .kb-hint { opacity: 0.95; }
   <div class="slide-inner">
     <div class="slide-header" data-reveal>
       <div class="slide-eyebrow">Validation Workflow · 표준 + 내 plan 매핑</div>
-      <div class="slide-meta">13 / 16</div>
+      <div class="slide-meta">13 / 19</div>
     </div>
     <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.4rem,1.2vh,0.85rem);">7 step 중 <span class="em">약점 2곳</span> 보강 필요</h2>
     <div class="workflow-list">
@@ -1505,13 +1505,83 @@ body.show-hint .kb-hint { opacity: 0.95; }
 </section>
 
 <!-- =====================================================
-     SLIDE 14 — MARCO TRIAL OVERVIEW
+     SLIDE 14 — MARCO INTRO 1 · Structure & Domains
      ===================================================== -->
-<section class="slide" id="s14" data-title="MARCO Trial">
+<section class="slide" id="s14" data-title="MARCO Structure">
+  <div class="slide-inner">
+    <div class="slide-header" data-reveal>
+      <div class="slide-eyebrow">두 번째 Target · MARCO</div>
+      <div class="slide-meta">14 / 19</div>
+    </div>
+    <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.4rem,1.2vh,0.8rem);">MARCO — <span class="em">Macrophage Receptor with COllagenous structure</span></h2>
+    <div style="display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(1rem,2.2vw,1.8rem);align-items:center;flex:1;min-height:0;overflow:hidden;">
+      <div data-reveal="3" style="display:flex;justify-content:center;align-items:center;height:100%;min-height:0;">
+        <img src="images/marco_domain_structure.png" alt="MARCO domain structure" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;">
+      </div>
+      <div data-reveal="4" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.3vh,0.9rem);min-height:0;font-size:var(--small-size);line-height:1.55;">
+        <div>
+          <strong style="color:var(--accent-blue);">Class A Scavenger Receptor</strong> 계열 · 대식세포 표면 발현<br>
+          박테리아·환경 먼지 입자를 인식하여 phagocytosis 매개
+        </div>
+        <div style="border-left:3px solid var(--accent-blue);padding-left:0.85rem;">
+          <div style="font-weight:700;margin-bottom:0.25rem;">5개 도메인 구성</div>
+          ① cytoplasmic · ② transmembrane · ③ spacer<br>
+          ④ collagenous (삼중 나선 stalk)<br>
+          <span style="color:var(--accent-blue);font-weight:700;">⑤ SRCR — 본 연구 타겟</span>
+        </div>
+        <div style="background:var(--bg-soft, #f4f6fb);padding:clamp(0.55rem,1.4vw,0.85rem);border-radius:6px;">
+          <div style="font-weight:700;margin-bottom:0.3rem;">SRCR (Scavenger Receptor Cysteine-Rich) 도메인</div>
+          외부 병원체를 직접 결합하는 <em style="color:var(--accent-blue);font-style:normal;font-weight:700;">'갈고리'</em> 역할.
+          내부에 양전하 Arginine 클러스터(<strong>RxR motif</strong>)가 모여, 병원균 표면 음전하 분자와 강력하게 결합.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 15 — MARCO INTRO 2 · Spleen Targeting & Therapeutic
+     ===================================================== -->
+<section class="slide" id="s15" data-title="Spleen Targeting">
+  <div class="slide-inner">
+    <div class="slide-header" data-reveal>
+      <div class="slide-eyebrow">두 번째 Target · 전달 전략</div>
+      <div class="slide-meta">15 / 19</div>
+    </div>
+    <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.4rem,1.2vh,0.8rem);">왜 비장인가 — <span class="em">Marginal Zone Macrophage</span></h2>
+    <div style="display:grid;grid-template-columns:1fr 1.2fr;gap:clamp(1rem,2.2vw,1.8rem);align-items:center;flex:1;min-height:0;overflow:hidden;">
+      <div data-reveal="3" style="display:flex;justify-content:center;align-items:center;height:100%;min-height:0;">
+        <img src="images/spleen_marginal_zone.png" alt="Spleen marginal zone macrophages" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;">
+      </div>
+      <div data-reveal="4" style="display:flex;flex-direction:column;gap:clamp(0.5rem,1.3vh,0.9rem);min-height:0;font-size:var(--small-size);line-height:1.55;">
+        <div style="border-left:3px solid var(--accent-blue);padding-left:0.85rem;">
+          <div style="font-weight:700;margin-bottom:0.25rem;color:var(--accent-blue);">비장 Marginal Zone</div>
+          MZ macrophage가 <strong>MARCO를 고밀도로 발현</strong> ·
+          혈류를 거치는 항원을 1차 포착하는 면역 관문
+        </div>
+        <div>
+          <div style="font-weight:700;margin-bottom:0.25rem;">전달 메커니즘</div>
+          MARCO+ MZ macrophage가 포착한 항원 → 비장 안쪽
+          <strong>T·B·DC</strong>로 전달 → 면역 반응 개시
+        </div>
+        <div style="background:var(--bg-dark, #0a0a0a);color:var(--text-light, #fafafa);padding:clamp(0.7rem,1.5vw,1rem);border-radius:6px;">
+          <div style="font-size:0.75em;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent-blue-soft, #8ab4ff);font-weight:700;margin-bottom:0.4rem;">치료용 타겟 발전 가능성</div>
+          <div style="margin-bottom:0.35rem;">▸ <strong>MARCO+ TAM</strong> 타겟 → 종양미세환경(TME) reprogramming</div>
+          <div>▸ 항원 conjugate · 백신 전달 플랫폼 후보</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 16 — MARCO TRIAL OVERVIEW
+     ===================================================== -->
+<section class="slide" id="s16" data-title="MARCO Trial">
   <div class="slide-inner">
     <div class="slide-header" data-reveal>
       <div class="slide-eyebrow">두 번째 Target · MARCO SRCR</div>
-      <div class="slide-meta">14 / 16</div>
+      <div class="slide-meta">16 / 19</div>
     </div>
     <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.5rem,1.5vh,1rem);">MARCO BindCraft · <span class="em">13 차 trial</span> 종합</h2>
     <div class="trial-grid">
@@ -1553,11 +1623,11 @@ body.show-hint .kb-hint { opacity: 0.95; }
 <!-- =====================================================
      SLIDE 15 — MARCO TOP 10
      ===================================================== -->
-<section class="slide" id="s15" data-title="MARCO Top 10">
+<section class="slide" id="s17" data-title="MARCO Top 10">
   <div class="slide-inner">
     <div class="slide-header" data-reveal>
       <div class="slide-eyebrow">MARCO · i_pTM Top 10 후보</div>
-      <div class="slide-meta">15 / 16</div>
+      <div class="slide-meta">17 / 19</div>
     </div>
     <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.5rem,1.5vh,1rem);">실험 1순위 <span class="em">추천군</span></h2>
     <div class="top10-table-wrap" data-reveal="3">
@@ -1590,9 +1660,45 @@ body.show-hint .kb-hint { opacity: 0.95; }
 </section>
 
 <!-- =====================================================
-     SLIDE 16 — Q&A
+     SLIDE 18 — MARCO TOP 5 INTERACTIVE (NGL Viewer)
      ===================================================== -->
-<section class="slide" id="s16" data-title="Q&amp;A">
+<section class="slide" id="s18" data-title="MARCO Interactive">
+  <div class="slide-inner">
+    <div class="slide-header" data-reveal>
+      <div class="slide-eyebrow">MARCO Top 5 · Interactive Structure</div>
+      <div class="slide-meta">18 / 19</div>
+    </div>
+    <div class="ngl-wrap">
+      <div class="ngl-left" data-reveal="2">
+        <div class="ngl-buttons">
+          <button class="ngl-btn-marco active" data-i="0">Rank 1</button>
+          <button class="ngl-btn-marco" data-i="1">Rank 2</button>
+          <button class="ngl-btn-marco" data-i="2">Rank 3</button>
+          <button class="ngl-btn-marco" data-i="3">Rank 4</button>
+          <button class="ngl-btn-marco" data-i="4">Rank 5</button>
+        </div>
+        <div id="ngl-stage-marco"></div>
+      </div>
+      <div class="ngl-right" data-reveal="3">
+        <div id="ngl-name-marco" class="ngl-info-name">Rank 1 · l91_s425975_mpnn1</div>
+        <div class="ngl-info-grid" id="ngl-info-marco"></div>
+        <div class="ngl-legend">
+          <div class="lg-title">표시</div>
+          <span class="swatch sw-gray"></span> MARCO SRCR chain A (gray surface)<br>
+          <span class="swatch sw-rainbow"></span> binder chain B (rainbow N→C)<br>
+          <span class="swatch sw-red"></span> hotspot A88 (= 2OY3 A508)
+          <div class="lg-title" style="margin-top:0.7em;">조작</div>
+          드래그·회전 / 휠·줌 / Shift+드래그·이동
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 19 — Q&A
+     ===================================================== -->
+<section class="slide" id="s19" data-title="Q&amp;A">
   <div class="qa-main">
     <h1 data-reveal>질문 <span class="em">환영합니다</span></h1>
     <div class="qa-divider" data-reveal="2"></div>
@@ -1754,6 +1860,56 @@ document.querySelectorAll('.ngl-btn').forEach((btn, i) => {
     btn.addEventListener('click', () => loadBinder(i));
 });
 initNGL();
+
+/* ===========================================
+   SLIDE 18: NGL Viewer · MARCO Top 5
+   =========================================== */
+const marcoBinders = [
+    { name: 'l91_s425975_mpnn1',   pdb: 'structures/marco_binder1_complex.pdb', len: 91,  iptm: 0.76, ptm: 0.81, ipae: 0.22, plddt: 0.85, sc: 0.64, dG: -35.4, note: '★ 균형' },
+    { name: 'l91_s425975_mpnn3',   pdb: 'structures/marco_binder2_complex.pdb', len: 91,  iptm: 0.76, ptm: 0.82, ipae: 0.22, plddt: 0.88, sc: 0.65, dG: -29.7, note: '−' },
+    { name: 'l93_s407597_mpnn1',   pdb: 'structures/marco_binder3_complex.pdb', len: 93,  iptm: 0.73, ptm: 0.80, ipae: 0.22, plddt: 0.92, sc: 0.61, dG: -23.4, note: 'pLDDT ↑' },
+    { name: 'l93_s407597_mpnn2',   pdb: 'structures/marco_binder4_complex.pdb', len: 93,  iptm: 0.72, ptm: 0.79, ipae: 0.22, plddt: 0.91, sc: 0.66, dG: -23.8, note: 'SC ↑' },
+    { name: 'l102_s689045_mpnn14', pdb: 'structures/marco_binder5_complex.pdb', len: 102, iptm: 0.71, ptm: 0.81, ipae: 0.22, plddt: 0.94, sc: 0.63, dG: -27.5, note: 'pLDDT ↑↑' },
+];
+let stageMarco = null;
+let currentCompMarco = null;
+
+function initNGLMarco() {
+    if (typeof NGL === 'undefined') return setTimeout(initNGLMarco, 200);
+    const el = document.getElementById('ngl-stage-marco');
+    if (!el) return;
+    stageMarco = new NGL.Stage('ngl-stage-marco', { backgroundColor: '#fafafa', quality: 'high', antialias: true });
+    window.addEventListener('resize', () => stageMarco && stageMarco.handleResize());
+    loadBinderMarco(0);
+}
+async function loadBinderMarco(i) {
+    if (!stageMarco) return;
+    if (currentCompMarco) stageMarco.removeComponent(currentCompMarco);
+    const b = marcoBinders[i];
+    currentCompMarco = await stageMarco.loadFile(b.pdb);
+    currentCompMarco.addRepresentation('cartoon',    { sele: ':A', color: '#bbbbbb' });
+    currentCompMarco.addRepresentation('surface',    { sele: ':A', color: '#cccccc', opacity: 0.22, surfaceType: 'av' });
+    currentCompMarco.addRepresentation('cartoon',    { sele: ':B', color: 'residueindex', colorScale: 'rainbow' });
+    currentCompMarco.addRepresentation('ball+stick', { sele: '88:A and sidechainAttached', color: '#e63946' });
+    stageMarco.autoView(800);
+
+    document.getElementById('ngl-name-marco').textContent = `Rank ${i + 1} · ${b.name}`;
+    document.getElementById('ngl-info-marco').innerHTML = `
+        <div class="ngl-info-row"><span class="lbl">Length</span><span class="val">${b.len} aa</span></div>
+        <div class="ngl-info-row"><span class="lbl">i_pTM</span><span class="val">${b.iptm}</span></div>
+        <div class="ngl-info-row"><span class="lbl">pTM</span><span class="val">${b.ptm}</span></div>
+        <div class="ngl-info-row"><span class="lbl">i_pAE</span><span class="val">${b.ipae}</span></div>
+        <div class="ngl-info-row"><span class="lbl">pLDDT</span><span class="val">${b.plddt}</span></div>
+        <div class="ngl-info-row"><span class="lbl">SC</span><span class="val">${b.sc}</span></div>
+        <div class="ngl-info-row"><span class="lbl">ΔG</span><span class="val">${b.dG} kcal/mol</span></div>
+        <div class="ngl-info-row"><span class="lbl">Note</span><span class="val">${b.note}</span></div>
+    `;
+    document.querySelectorAll('.ngl-btn-marco').forEach((btn, idx) => btn.classList.toggle('active', idx === i));
+}
+document.querySelectorAll('.ngl-btn-marco').forEach((btn, i) => {
+    btn.addEventListener('click', () => loadBinderMarco(i));
+});
+initNGLMarco();
 </script>
 
 </body>
