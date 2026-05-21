@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ColH PD apo Binder — BindCraft Top 5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ===========================================
+   VIEWPORT BASE — MANDATORY
+   =========================================== */
+html, body { height: 100%; overflow-x: hidden; margin: 0; padding: 0; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+* { box-sizing: border-box; }
+
+.slide {
+    width: 100vw; height: 100vh; height: 100dvh;
+    overflow: hidden;
+    scroll-snap-align: start;
+    display: flex; flex-direction: column;
+    position: relative;
+}
+
+:root {
+    /* Typography scale */
+    --title-size: clamp(2.25rem, 6.5vw, 5.5rem);
+    --h1-size:    clamp(1.85rem, 4.5vw, 3.5rem);
+    --h2-size:    clamp(1.35rem, 3vw, 2.25rem);
+    --h3-size:    clamp(1.1rem, 2vw, 1.5rem);
+    --body-size:  clamp(0.9rem, 1.4vw, 1.15rem);
+    --small-size: clamp(0.75rem, 1.05vw, 0.95rem);
+    --xs-size:    clamp(0.65rem, 0.85vw, 0.8rem);
+
+    /* Spacing */
+    --slide-padding: clamp(2rem, 4.5vw, 4rem);
+    --content-gap: clamp(0.75rem, 2vh, 1.5rem);
+
+    /* Electric Studio palette */
+    --bg-dark: #0a0a0a;
+    --bg-white: #ffffff;
+    --bg-soft: #f6f7fb;
+    --bg-softer: #fafbfd;
+    --accent-blue: #4361ee;
+    --accent-blue-soft: #6b7fff;
+    --accent-blue-bg: rgba(67, 97, 238, 0.08);
+    --accent-blue-bg-strong: rgba(67, 97, 238, 0.15);
+    --accent-success: #2da06a;
+    --accent-warn: #e08a3c;
+    --accent-danger: #d05050;
+    --text-dark: #0a0a0a;
+    --text-mid: #4b5563;
+    --text-light: #ffffff;
+    --text-light-dim: rgba(255, 255, 255, 0.65);
+    --text-dim: #94a3b8;
+    --border-soft: rgba(10, 10, 10, 0.08);
+    --border-mid: rgba(10, 10, 10, 0.15);
+    --border-blue: rgba(67, 97, 238, 0.3);
+    --border-light: rgba(255, 255, 255, 0.12);
+}
+
+@media (max-height: 700px) {
+    :root {
+        --slide-padding: clamp(1.25rem, 3vw, 2.5rem);
+        --title-size: clamp(1.75rem, 5vw, 3.5rem);
+        --h1-size: clamp(1.4rem, 3.5vw, 2.5rem);
+        --h2-size: clamp(1.15rem, 2.5vw, 1.75rem);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.2s !important; }
+    html { scroll-behavior: auto; }
+}
+
+/* ===========================================
+   GLOBAL TYPOGRAPHY
+   =========================================== */
+body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--bg-white);
+    color: var(--text-dark);
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3 { font-family: 'Manrope', sans-serif; font-weight: 800; line-height: 1.05; margin: 0; letter-spacing: -0.025em; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+.blue { color: var(--accent-blue); }
+.dim { color: var(--text-mid); }
+
+/* ===========================================
+   COMMON SLIDE FRAME
+   =========================================== */
+.slide-inner {
+    flex: 1; display: flex; flex-direction: column;
+    padding: var(--slide-padding);
+    min-height: 0;
+}
+
+.slide-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-bottom: clamp(0.75rem, 2vh, 1.25rem);
+    border-bottom: 2px solid var(--text-dark);
+    margin-bottom: clamp(1rem, 2.5vh, 1.75rem);
+}
+.slide-eyebrow {
+    font-size: var(--small-size);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--accent-blue);
+    font-weight: 700;
+}
+.slide-meta {
+    font-size: var(--xs-size); letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--text-mid);
+    font-family: 'JetBrains Mono', monospace; font-weight: 400;
+}
+
+.slide-title { font-size: var(--h1-size); color: var(--text-dark); }
+.slide-title .em { color: var(--accent-blue); }
+
+/* ===========================================
+   NAV DOTS
+   =========================================== */
+.nav-dots {
+    position: fixed; right: clamp(1rem, 2vw, 1.75rem); top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 0.6rem; z-index: 100;
+}
+.nav-dots a {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--border-mid); transition: all 0.25s ease;
+    display: block;
+}
+.nav-dots a:hover { background: var(--accent-blue); transform: scale(1.4); }
+.nav-dots a.active { background: var(--accent-blue); transform: scale(1.6); }
+@media (max-height: 600px) { .nav-dots { display: none; } }
+
+/* ===========================================
+   KEYBOARD HINT
+   =========================================== */
+.kb-hint {
+    position: fixed; bottom: clamp(0.75rem, 1.5vh, 1.25rem); left: 50%; transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace; font-size: var(--xs-size);
+    color: var(--text-mid); letter-spacing: 0.15em; z-index: 100;
+    opacity: 0; transition: opacity 0.5s ease;
+    background: rgba(255,255,255,0.92); padding: 0.4rem 0.9rem; border-radius: 3px;
+    border: 1px solid var(--border-soft);
+}
+body.show-hint .kb-hint { opacity: 0.95; }
+@media (max-height: 600px) { .kb-hint { display: none; } }
+
+/* ===========================================
+   SLIDE 1 — TITLE (Two-panel split)
+   =========================================== */
+#s1 { display: grid; grid-template-rows: 58% 42%; padding: 0; }
+#s1 .panel-top {
+    background: var(--bg-white);
+    padding: var(--slide-padding);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    position: relative;
+}
+#s1 .panel-bottom {
+    background: var(--bg-dark);
+    color: var(--text-light);
+    padding: var(--slide-padding);
+    border-top: 8px solid var(--accent-blue);
+    display: grid; grid-template-columns: 1fr 1.5fr;
+    gap: clamp(1.5rem, 3vw, 3rem);
+    align-items: center;
+}
+
+#s1 .brand-mark {
+    position: absolute;
+    top: var(--slide-padding); left: var(--slide-padding);
+    font-size: var(--small-size); font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent-blue);
+}
+#s1 .date-mark {
+    position: absolute;
+    top: var(--slide-padding); right: var(--slide-padding);
+    font-family: 'JetBrains Mono', monospace; font-size: var(--small-size);
+    letter-spacing: 0.1em; color: var(--text-mid);
+}
+
+#s1 .eyebrow {
+    font-size: var(--small-size); font-weight: 700;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--accent-blue); margin-bottom: 1.25rem;
+}
+#s1 h1 {
+    font-size: var(--title-size); line-height: 0.95; letter-spacing: -0.035em;
+    color: var(--text-dark);
+}
+#s1 h1 .accent { color: var(--accent-blue); }
+#s1 .tagline {
+    font-size: var(--h2-size); font-weight: 400;
+    margin-top: clamp(1rem, 2.5vh, 1.75rem); line-height: 1.4;
+    color: var(--text-mid); max-width: 90%;
+}
+
+#s1 .quote-area {
+    padding-right: clamp(1rem, 2.5vw, 2.5rem);
+    border-right: 1px solid var(--border-light);
+}
+#s1 .quote-area .lbl {
+    font-size: var(--small-size); letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent-blue-soft); font-weight: 700; margin-bottom: 0.75rem;
+}
+#s1 .quote-area .quote {
+    font-size: clamp(1.1rem, 2.2vw, 1.75rem); font-weight: 300;
+    line-height: 1.4; color: var(--text-light);
+}
+#s1 .quote-area .quote .em { color: var(--accent-blue-soft); font-weight: 600; }
+
+#s1 .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 2.5vw, 2rem); }
+#s1 .metric .num {
+    font-family: 'Manrope', sans-serif; font-weight: 800;
+    font-size: clamp(2.5rem, 5.5vw, 4.5rem); line-height: 1;
+    letter-spacing: -0.04em; color: var(--text-light);
+}
+#s1 .metric .num .unit { color: var(--accent-blue-soft); }
+#s1 .metric .lbl {
+    font-size: var(--small-size); text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--text-light-dim); margin-top: 0.6rem; font-weight: 500;
+}
+
+/* ===========================================
+   SLIDE 2 — BIG NUMBERS
+   =========================================== */
+#s2 .stats-hero {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: center; flex: 1;
+}
+.stat-big {
+    text-align: center;
+    padding: clamp(1.5rem, 4vh, 3rem) clamp(0.75rem, 2vw, 1.5rem);
+    border-radius: 6px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border-soft);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+}
+.stat-big.featured {
+    background: var(--accent-blue);
+    color: var(--text-light);
+    border: none;
+}
+.stat-big .num {
+    font-family: 'Manrope', sans-serif; font-weight: 800;
+    font-size: clamp(3.5rem, 9vw, 7rem); line-height: 0.9;
+    color: var(--text-dark); letter-spacing: -0.05em;
+}
+.stat-big.featured .num { color: var(--text-light); }
+.stat-big .num-sub {
+    font-size: clamp(0.9rem, 1.5vw, 1.15rem); font-weight: 500;
+    color: var(--accent-blue); margin-top: 0.4rem;
+}
+.stat-big.featured .num-sub { color: rgba(255,255,255,0.85); }
+.stat-big .lbl {
+    margin-top: clamp(0.9rem, 2.2vh, 1.5rem);
+    font-size: var(--body-size); text-transform: uppercase; letter-spacing: 0.18em;
+    color: var(--text-dark); font-weight: 700;
+}
+.stat-big.featured .lbl { color: var(--text-light); }
+.stat-big .desc {
+    margin-top: 0.5rem; font-size: var(--small-size); color: var(--text-mid);
+    font-weight: 400;
+}
+.stat-big.featured .desc { color: rgba(255,255,255,0.75); }
+
+#s2 .narrative {
+    margin-top: clamp(1rem, 3vh, 2rem); padding-top: clamp(1rem, 3vh, 2rem);
+    border-top: 1px solid var(--border-soft);
+    text-align: center; font-size: var(--h3-size); color: var(--text-mid);
+    line-height: 1.6; max-width: min(85ch, 95vw); margin-left: auto; margin-right: auto;
+    font-weight: 400;
+}
+#s2 .narrative .em { color: var(--accent-blue); font-weight: 600; }
+
+/* ===========================================
+   SLIDE 3 — COMPARE
+   =========================================== */
+#s3 .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1rem, 2.5vw, 2.25rem); flex: 1; min-height: 0; }
+.compare-col {
+    padding: clamp(1.25rem, 2.5vw, 2rem);
+    border-radius: 6px;
+    display: flex; flex-direction: column; gap: clamp(0.5rem, 1.5vh, 1rem);
+    min-height: 0; overflow: hidden;
+}
+.compare-col.old {
+    background: var(--bg-soft);
+    border: 1px solid var(--border-soft);
+}
+.compare-col.new {
+    background: var(--bg-dark);
+    color: var(--text-light);
+    border-top: 6px solid var(--accent-blue);
+}
+.compare-col h3 { font-size: var(--h3-size); font-weight: 700; }
+.compare-col.old h3 { color: var(--text-mid); }
+.compare-col.new h3 { color: var(--text-light); }
+.compare-col .tag {
+    display: inline-block; font-size: var(--xs-size); letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 0.3rem 0.75rem; border-radius: 3px; font-weight: 700;
+    background: rgba(10,10,10,0.06); color: var(--text-mid); width: fit-content;
+}
+.compare-col.new .tag { background: var(--accent-blue); color: var(--text-light); }
+.compare-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: clamp(0.5rem, 1.3vh, 0.9rem); }
+.compare-col li {
+    font-size: var(--body-size); line-height: 1.5; padding-left: 1.25rem; position: relative;
+}
+.compare-col li::before {
+    content: ""; position: absolute; left: 0; top: 0.6em;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent-blue);
+}
+.compare-col.old li { color: var(--text-mid); }
+.compare-col.old li::before { background: var(--text-dim); }
+.compare-col.new li { color: var(--text-light); }
+.compare-col.new li .hl { color: var(--accent-blue-soft); font-weight: 700; }
+.foot-note {
+    margin-top: clamp(0.75rem, 2vh, 1.5rem);
+    font-size: var(--small-size); color: var(--text-mid);
+    text-align: center; padding-top: 1rem; border-top: 1px solid var(--border-soft);
+}
+.foot-note .em { color: var(--accent-blue); font-weight: 700; }
+
+/* ===========================================
+   SLIDE 4 — MODULAR ASSEMBLY
+   =========================================== */
+#s4 .modular-wrap { display: flex; flex-direction: column; gap: clamp(0.75rem, 2vh, 1.5rem); flex: 1; min-height: 0; }
+.module-table { width: 100%; border-collapse: collapse; font-size: var(--body-size); }
+.module-table thead { background: var(--bg-soft); }
+.module-table th {
+    text-align: left; padding: clamp(0.6rem, 1.3vh, 0.95rem) clamp(0.75rem, 1.5vw, 1.25rem);
+    font-family: 'JetBrains Mono', monospace; font-size: var(--small-size);
+    text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--accent-blue); font-weight: 700;
+    border-bottom: 2px solid var(--text-dark);
+}
+.module-table td {
+    padding: clamp(0.6rem, 1.3vh, 0.95rem) clamp(0.75rem, 1.5vw, 1.25rem);
+    border-bottom: 1px solid var(--border-soft);
+    color: var(--text-dark); vertical-align: top; line-height: 1.45;
+}
+.module-table td:first-child { font-weight: 700; color: var(--accent-blue); }
+.module-table tr:hover td { background: var(--accent-blue-bg); }
+
+.mechanism {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: clamp(1rem, 2.5vw, 2rem); align-items: stretch;
+    padding: clamp(0.5rem, 1.5vh, 1rem) 0;
+}
+.mech-state {
+    padding: clamp(1rem, 2vw, 1.5rem); border-radius: 6px;
+    display: flex; flex-direction: column; gap: 0.5rem;
+}
+.mech-state.off { background: var(--bg-soft); border: 1px solid var(--border-soft); }
+.mech-state.on  { background: var(--accent-blue); color: var(--text-light); }
+.mech-state .state-label {
+    font-size: var(--xs-size); text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--text-mid); font-family: 'JetBrains Mono', monospace; font-weight: 600;
+}
+.mech-state.on .state-label { color: rgba(255,255,255,0.8); }
+.mech-state .state-name { font-size: var(--h3-size); font-weight: 700; color: var(--text-dark); }
+.mech-state.on .state-name { color: var(--text-light); }
+.mech-state .state-eq {
+    font-family: 'JetBrains Mono', monospace; font-size: var(--small-size);
+    color: var(--text-mid); line-height: 1.6;
+}
+.mech-state.on .state-eq { color: rgba(255,255,255,0.85); }
+.mech-state .state-eq .hl { color: var(--accent-blue); font-weight: 700; }
+.mech-state.on .state-eq .hl { color: #ffffff; font-weight: 700; }
+.mech-arrow {
+    font-size: var(--h2-size); font-weight: 800; color: var(--accent-blue);
+    display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0.25rem;
+}
+.mech-arrow .label-arrow {
+    font-size: var(--xs-size); letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--text-mid); font-family: 'JetBrains Mono', monospace; font-weight: 600;
+}
+
+/* ===========================================
+   SLIDE 5 — TAG/LINKER
+   =========================================== */
+#s5 .tag-list {
+    display: flex; flex-direction: column; gap: clamp(0.75rem, 2vh, 1.25rem);
+    flex: 1; min-height: 0; overflow: hidden;
+}
+.tag-row {
+    display: grid; grid-template-columns: clamp(8rem, 22%, 13rem) 1fr;
+    gap: clamp(1rem, 2.5vw, 2rem); align-items: center;
+    padding: clamp(0.85rem, 2vh, 1.35rem) clamp(1rem, 2vw, 1.5rem);
+    background: var(--bg-soft); border-left: 4px solid var(--accent-blue);
+    border-radius: 4px;
+}
+.tag-name {
+    font-size: var(--h3-size); font-weight: 700; color: var(--text-dark);
+}
+.tag-seq {
+    font-family: 'JetBrains Mono', monospace; font-size: var(--body-size);
+    color: var(--text-dark); line-height: 1.7;
+}
+.tag-seq .seg {
+    display: inline-block;
+    padding: 0.25em 0.6em; margin: 0.15em 0.2em 0.15em 0;
+    border-radius: 3px; font-weight: 500;
+    background: var(--accent-blue-bg-strong); color: var(--accent-blue);
+    font-size: 0.9em;
+}
+.tag-seq .seg.body { background: rgba(10,10,10,0.06); color: var(--text-dark); font-weight: 600; }
+.tag-seq .seg.purify { background: rgba(45, 160, 106, 0.12); color: var(--accent-success); }
+
+/* ===========================================
+   SLIDE 6 — BINDCRAFT TRIAL TABLE
+   =========================================== */
+#s6 .trial-grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: clamp(1.25rem, 3vw, 2.5rem); flex: 1; min-height: 0; }
+.trial-table { width: 100%; border-collapse: collapse; font-size: var(--body-size); }
+.trial-table th, .trial-table td {
+    padding: clamp(0.5rem, 1.1vh, 0.8rem) clamp(0.6rem, 1vw, 0.85rem);
+    text-align: left; border-bottom: 1px solid var(--border-soft);
+}
+.trial-table th {
+    font-family: 'JetBrains Mono', monospace; font-size: var(--small-size);
+    color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.12em;
+    font-weight: 700; border-bottom: 2px solid var(--text-dark);
+}
+.trial-table td { color: var(--text-dark); font-weight: 500; }
+.trial-table tr.highlight td {
+    background: var(--accent-blue-bg-strong);
+    font-weight: 700; color: var(--text-dark);
+}
+.trial-table tr.highlight td:last-child {
+    color: var(--accent-blue); font-size: var(--h3-size); font-weight: 800;
+}
+.trial-table tr.dim td { color: var(--text-mid); font-weight: 400; }
+.trial-table tr.dim td:last-child { color: var(--text-dim); }
+
+/* MARCO 13-row table: very tight rows for full deck */
+.trial-table.marco-table th,
+.trial-table.marco-table td {
+    padding: clamp(0.22rem, 0.55vh, 0.4rem) clamp(0.3rem, 0.55vw, 0.5rem);
+    font-size: clamp(0.7rem, 1.05vw, 0.92rem);
+    line-height: 1.25;
+}
+.trial-table.marco-table th { font-size: clamp(0.6rem, 0.85vw, 0.75rem); }
+.trial-table.marco-table tr.highlight td:last-child {
+    font-size: var(--small-size); white-space: nowrap;
+}
+
+/* MARCO slide: give table more horizontal space */
+#s14 .trial-grid { grid-template-columns: 2.3fr 1fr; gap: clamp(0.85rem, 2vw, 1.75rem); }
+#s14 .pivot-callout { padding: clamp(0.85rem, 2vw, 1.35rem); gap: 0.5rem; }
+#s14 .pivot-callout .pc-title { font-size: var(--h3-size); }
+#s14 .pivot-callout .pc-body { font-size: var(--xs-size); }
+#s14 .pivot-callout .pc-big { font-size: clamp(1.65rem, 4.2vw, 2.75rem); margin-top: 0.2rem; }
+
+.pivot-callout {
+    padding: clamp(1.25rem, 2.5vw, 1.75rem);
+    background: var(--bg-dark);
+    color: var(--text-light);
+    border-radius: 6px;
+    display: flex; flex-direction: column; gap: 0.75rem;
+    justify-content: center;
+    border-top: 4px solid var(--accent-blue);
+}
+.pivot-callout .pc-label {
+    font-size: var(--xs-size); text-transform: uppercase; letter-spacing: 0.2em;
+    color: var(--accent-blue-soft); font-family: 'JetBrains Mono', monospace; font-weight: 700;
+}
+.pivot-callout .pc-title { font-size: var(--h2-size); font-weight: 800; color: var(--text-light); }
+.pivot-callout .pc-body { font-size: var(--small-size); color: var(--text-light-dim); line-height: 1.6; }
+.pivot-callout .pc-big {
+    font-family: 'Manrope', sans-serif; font-weight: 800;
+    font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+    color: var(--accent-blue-soft); line-height: 1; margin-top: 0.4rem;
+    letter-spacing: -0.03em;
+}
+.pivot-callout .pc-big .arrow { color: var(--text-light); margin: 0 0.4rem; }
+
+/* ===========================================
+   SLIDE 7 — AF3 DISTRIBUTION (CHART)
+   =========================================== */
+#s7 .af3-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(1rem, 3vw, 2.5rem); flex: 1; min-height: 0; }
+.chart-wrap {
+    position: relative; min-height: 0;
+    background: var(--bg-soft); border-radius: 6px;
+    padding: clamp(1rem, 2vw, 1.75rem);
+    display: flex; flex-direction: column; gap: 0.75rem;
+    border: 1px solid var(--border-soft);
+}
+.chart-wrap .chart-title {
+    font-size: var(--small-size); letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent-blue); font-family: 'JetBrains Mono', monospace; font-weight: 700;
+}
+.chart-wrap canvas { flex: 1; max-height: 100% !important; min-height: 0; }
+
+.af3-side { display: flex; flex-direction: column; gap: clamp(0.75rem, 2vh, 1.25rem); }
+.af3-stat-block {
+    padding: clamp(0.85rem, 1.8vw, 1.25rem);
+    background: var(--bg-soft); border-radius: 6px;
+    border: 1px solid var(--border-soft);
+}
+.af3-stat-block .blk-title {
+    font-size: var(--xs-size); letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent-blue); margin-bottom: 0.6rem;
+    font-family: 'JetBrains Mono', monospace; font-weight: 700;
+}
+.af3-stat-block .blk-row {
+    display: grid; grid-template-columns: 1fr auto auto auto; gap: 0.5rem;
+    font-size: var(--body-size); padding: 0.3rem 0; align-items: baseline;
+}
+.af3-stat-block .blk-row .lbl {
+    color: var(--text-mid); font-family: 'JetBrains Mono', monospace;
+    font-size: var(--small-size); font-weight: 500;
+}
+.af3-stat-block .blk-row .v {
+    font-weight: 700; color: var(--text-dark);
+    font-family: 'JetBrains Mono', monospace; font-size: var(--body-size);
+}
+.af3-stat-block .blk-row .v.hl { color: var(--accent-blue); }
+.af3-message {
+    font-size: var(--h3-size); color: var(--text-dark); line-height: 1.5;
+    padding: clamp(0.75rem, 1.5vw, 1.25rem); font-weight: 500;
+    border-left: 4px solid var(--accent-blue); padding-left: 1rem;
+    background: var(--accent-blue-bg);
+    border-radius: 0 4px 4px 0;
+}
+.af3-message .em { color: var(--accent-blue); font-weight: 700; }
+
+/* ===========================================
+   SLIDE 8 — TOP 10 TABLE
+   =========================================== */
+#s8 .top10-table-wrap { flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
+.top10-table { width: 100%; border-collapse: collapse; font-size: var(--small-size); }
+.top10-table th {
+    padding: clamp(0.5rem, 1.1vh, 0.7rem) clamp(0.35rem, 0.7vw, 0.6rem);
+    font-family: 'JetBrains Mono', monospace; font-size: var(--xs-size);
+    color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.1em;
+    text-align: left; border-bottom: 2px solid var(--text-dark); font-weight: 700;
+    white-space: nowrap;
+}
+.top10-table td {
+    padding: clamp(0.4rem, 1vh, 0.6rem) clamp(0.35rem, 0.7vw, 0.6rem);
+    border-bottom: 1px solid var(--border-soft);
+    color: var(--text-dark); vertical-align: middle; line-height: 1.3;
+    font-family: 'JetBrains Mono', monospace; font-size: var(--small-size);
+    font-weight: 500;
+}
+.top10-table td.rank-cell {
+    font-family: 'Manrope', sans-serif; font-weight: 800;
+    color: var(--accent-blue); font-size: var(--body-size);
+}
+.top10-table td.design-cell { color: var(--text-dark); font-weight: 500; }
+.top10-table td.hot { color: var(--accent-success); font-weight: 700; }
+.top10-table td.warn { color: var(--accent-warn); font-weight: 700; }
+.top10-table tr.top5 td { background: var(--accent-blue-bg); }
+.top10-table tr:hover td { background: var(--accent-blue-bg-strong); }
+
+.top10-legend {
+    margin-top: clamp(0.75rem, 1.5vh, 1.25rem);
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.5rem, 1.5vw, 1rem);
+}
+.legend-cell {
+    padding: clamp(0.65rem, 1.4vw, 1rem);
+    border-radius: 4px; font-size: var(--small-size); line-height: 1.5;
+    background: var(--bg-soft);
+    border-left: 4px solid var(--accent-blue);
+    color: var(--text-dark);
+}
+.legend-cell .lt {
+    font-weight: 800; font-size: var(--body-size); color: var(--accent-blue);
+    margin-right: 0.5em;
+}
+.legend-cell.warn { border-left-color: var(--accent-warn); }
+.legend-cell.warn .lt { color: var(--accent-warn); }
+.legend-cell.success { border-left-color: var(--accent-success); }
+.legend-cell.success .lt { color: var(--accent-success); }
+
+/* ===========================================
+   SLIDE 9 — TOP 5 OVERVIEW
+   =========================================== */
+#s9 .top5-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: clamp(0.6rem, 1.2vw, 1.1rem);
+    flex: 0 0 auto;
+}
+.binder-card {
+    background: var(--bg-soft); border: 1px solid var(--border-soft);
+    border-radius: 6px; padding: clamp(0.5rem, 1vw, 0.85rem);
+    display: flex; flex-direction: column; gap: 0.4rem;
+    transition: all 0.3s ease;
+}
+.binder-card:hover {
+    border-color: var(--accent-blue);
+    background: var(--accent-blue-bg);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(67, 97, 238, 0.15);
+}
+.binder-card img {
+    width: 100%; max-height: clamp(7rem, 18vh, 13rem); object-fit: contain;
+    background: var(--bg-white); border-radius: 3px;
+}
+.binder-card .b-rank { font-weight: 800; color: var(--accent-blue); font-size: var(--body-size); }
+.binder-card .b-name { font-family: 'JetBrains Mono', monospace; font-size: var(--xs-size); color: var(--text-mid); font-weight: 500; }
+.binder-card .b-stats {
+    font-family: 'JetBrains Mono', monospace; font-size: var(--xs-size);
+    color: var(--text-dark); line-height: 1.5; margin-top: 0.25rem; font-weight: 500;
+}
+.binder-card .b-stats .v { color: var(--accent-blue); font-weight: 700; }
+
+#s9 .pae-section {
+    margin-top: clamp(0.75rem, 1.5vh, 1.25rem); flex: 1; min-height: 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(0.75rem, 2vw, 1.5rem);
+}
+.pae-col { display: flex; flex-direction: column; gap: 0.5rem; min-height: 0; }
+.pae-col .pae-label {
+    font-size: var(--small-size); letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent-blue); font-family: 'JetBrains Mono', monospace; font-weight: 700;
+}
+.pae-col .pae-row {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.4rem; flex: 1; min-height: 0;
+}
+.pae-col .pae-row img {
+    width: 100%; height: 100%; max-height: 100%; object-fit: contain;
+    border: 1px solid var(--border-soft); border-radius: 3px;
+    background: white;
+}
+
+#s9 .render-caption {
+    margin-top: 0.5rem; text-align: center; font-size: var(--small-size);
+    color: var(--text-mid); font-weight: 400;
+}
+
+/* ===========================================
+   SLIDE 10 — NGL INTERACTIVE
+   =========================================== */
+#s10 .ngl-wrap { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(1rem, 3vw, 2rem); flex: 1; min-height: 0; }
+.ngl-left { display: flex; flex-direction: column; gap: clamp(0.6rem, 1.5vh, 1rem); min-height: 0; }
+.ngl-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.ngl-btn {
+    padding: clamp(0.5rem, 1vh, 0.75rem) clamp(0.85rem, 1.7vw, 1.4rem);
+    background: var(--bg-soft); border: 2px solid var(--border-soft);
+    color: var(--text-dark); cursor: pointer;
+    font-family: 'Manrope', sans-serif; font-size: var(--small-size);
+    border-radius: 4px; transition: all 0.2s ease;
+    font-weight: 700;
+}
+.ngl-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+.ngl-btn.active {
+    background: var(--accent-blue); color: var(--text-light);
+    border-color: var(--accent-blue);
+}
+#ngl-stage {
+    flex: 1; min-height: 0;
+    background: #fafafa; border: 1px solid var(--border-soft); border-radius: 6px;
+}
+.ngl-right { display: flex; flex-direction: column; gap: clamp(0.5rem, 1.5vh, 1rem); }
+.ngl-info-name {
+    font-size: var(--h2-size); font-weight: 800; color: var(--text-dark);
+    border-bottom: 2px solid var(--accent-blue); padding-bottom: 0.5rem;
+    line-height: 1.2;
+}
+.ngl-info-grid { display: flex; flex-direction: column; gap: 0.4rem; }
+.ngl-info-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 0.5rem 0; border-bottom: 1px solid var(--border-soft);
+    font-size: var(--body-size);
+}
+.ngl-info-row .lbl {
+    color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.1em;
+    font-family: 'JetBrains Mono', monospace; font-size: var(--small-size); font-weight: 600;
+}
+.ngl-info-row .val {
+    color: var(--accent-blue); font-family: 'Manrope', sans-serif;
+    font-size: var(--body-size); font-weight: 800;
+}
+.ngl-legend {
+    margin-top: auto; padding: clamp(0.75rem, 1.5vw, 1.15rem);
+    background: var(--bg-soft); border-radius: 4px;
+    font-size: var(--small-size); color: var(--text-dark); line-height: 1.7;
+    border: 1px solid var(--border-soft);
+}
+.ngl-legend .lg-title {
+    color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.15em;
+    font-family: 'JetBrains Mono', monospace; margin-bottom: 0.5rem;
+    font-size: var(--xs-size); font-weight: 700;
+}
+.ngl-legend .swatch { display: inline-block; width: 0.85em; height: 0.85em; border-radius: 50%; margin-right: 0.5em; vertical-align: middle; }
+.ngl-legend .sw-gray { background: #c8c8c8; border: 1px solid #aaa; }
+.ngl-legend .sw-rainbow { background: linear-gradient(90deg, #2196f3, #4caf50, #ffc107, #f44336); }
+.ngl-legend .sw-red { background: #e63946; }
+
+/* ===========================================
+   SLIDE 11 — CLONING PROGRESS
+   =========================================== */
+#s11 .clone-grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: clamp(1.25rem, 3vw, 2.5rem); flex: 1; min-height: 0; }
+.clone-tasks { display: flex; flex-direction: column; gap: clamp(0.5rem, 1.3vh, 0.95rem); }
+.clone-task {
+    display: grid; grid-template-columns: auto 1fr auto;
+    gap: clamp(0.75rem, 1.8vw, 1.5rem); align-items: center;
+    padding: clamp(0.6rem, 1.4vh, 1rem) 0;
+    border-bottom: 1px solid var(--border-soft);
+}
+.clone-task .step-num {
+    font-family: 'Manrope', sans-serif; font-weight: 800;
+    color: var(--accent-blue); font-size: var(--h2-size);
+    width: 1.5em; text-align: center;
+}
+.clone-task[data-pct="0"] .step-num { color: var(--text-dim); }
+.clone-task .step-name { font-size: var(--body-size); color: var(--text-dark); line-height: 1.4; font-weight: 600; }
+.clone-task .step-detail {
+    font-size: var(--small-size); color: var(--text-mid);
+    font-family: 'JetBrains Mono', monospace; margin-top: 0.3rem; font-weight: 400;
+}
+.clone-task .step-progress {
+    display: flex; flex-direction: column; align-items: flex-end; gap: 0.3rem;
+    min-width: clamp(4.5rem, 11vw, 9rem);
+}
+.clone-task .step-bar {
+    width: 100%; height: 6px; background: var(--bg-soft); border-radius: 3px; overflow: hidden;
+    border: 1px solid var(--border-soft);
+}
+.clone-task .step-bar .fill {
+    height: 100%; background: var(--accent-blue); border-radius: 3px;
+    transition: width 0.6s ease;
+}
+.clone-task .step-pct {
+    font-family: 'Manrope', sans-serif; font-weight: 800;
+    font-size: var(--body-size); color: var(--accent-blue);
+}
+.clone-task[data-pct="0"] .step-pct { color: var(--text-dim); }
+.clone-task .step-name .check { color: var(--accent-success); font-weight: 800; margin-left: 0.4em; }
+.clone-task .step-name .warn { color: var(--accent-warn); font-weight: 800; margin-left: 0.4em; font-size: 0.85em; }
+.clone-task .step-detail strong { color: var(--accent-warn); font-weight: 700; }
+
+.yield-block {
+    padding: clamp(1.25rem, 2.2vw, 1.75rem);
+    background: var(--bg-dark); color: var(--text-light);
+    border-radius: 6px;
+    display: flex; flex-direction: column; gap: clamp(0.5rem, 1.2vh, 0.85rem);
+    border-top: 4px solid var(--accent-blue);
+}
+.yield-block .yb-title {
+    font-family: 'JetBrains Mono', monospace; font-size: var(--small-size);
+    color: var(--accent-blue-soft); text-transform: uppercase; letter-spacing: 0.15em;
+    font-weight: 700; margin-bottom: 0.5rem;
+}
+.yield-row {
+    display: grid; grid-template-columns: 1fr auto; gap: 0.75rem; align-items: baseline;
+    padding: 0.5rem 0; border-bottom: 1px solid var(--border-light);
+}
+.yield-row.last { border-bottom: none; padding-bottom: 0; }
+.yield-row .yr-name {
+    font-family: 'JetBrains Mono', monospace; font-size: var(--body-size);
+    color: var(--text-light); font-weight: 500;
+}
+.yield-row .yr-target {
+    font-family: 'Manrope', sans-serif; font-weight: 800;
+    color: var(--accent-blue-soft); font-size: var(--h3-size);
+}
+.yield-note {
+    font-size: var(--small-size); color: var(--text-light-dim);
+    margin-top: -0.4rem; padding-bottom: 0.2rem;
+}
+
+/* ===========================================
+   SLIDE 12 — BINDER GENE DESIGN (NEW)
+   =========================================== */
+.construct-box {
+    display: grid;
+    grid-template-columns: 0.9fr 0.9fr 1.2fr 1.5fr 0.5fr 0.9fr;
+    gap: 3px;
+    margin-bottom: clamp(0.85rem, 2vh, 1.5rem);
+    border-radius: 6px;
+    overflow: hidden;
+}
+.cb-cell {
+    padding: clamp(0.85rem, 2.2vh, 1.4rem) clamp(0.5rem, 1vw, 0.85rem);
+    text-align: center;
+    font-weight: 700;
+    font-size: var(--body-size);
+    line-height: 1.3;
+}
+.cb-cell .sub {
+    display: block;
+    font-size: var(--xs-size);
+    font-weight: 400;
+    margin-top: 0.3rem;
+    opacity: 0.8;
+    font-family: 'JetBrains Mono', monospace;
+}
+.cb-vector { background: var(--bg-soft); color: var(--text-mid); }
+.cb-his8 { background: rgba(45,160,106,0.15); color: var(--accent-success); }
+.cb-tev { background: var(--accent-blue-bg-strong); color: var(--accent-blue); }
+.cb-binder { background: var(--accent-blue); color: var(--text-light); }
+.cb-binder .sub { color: rgba(255,255,255,0.8); }
+.cb-stop { background: var(--bg-dark); color: var(--text-light); }
+.cb-stop .sub { color: rgba(255,255,255,0.65); }
+
+#s12 .design-grid { display: grid; grid-template-columns: 1fr 1.35fr; gap: clamp(1rem, 2.5vw, 2rem); flex: 1; min-height: 0; }
+.design-points {
+    padding: clamp(1rem, 2vw, 1.5rem); background: var(--bg-soft);
+    border-left: 4px solid var(--accent-blue); border-radius: 4px;
+    display: flex; flex-direction: column; gap: 0.85rem;
+}
+.design-points .dp-title {
+    font-size: var(--small-size); letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent-blue); font-weight: 700; font-family: 'JetBrains Mono', monospace;
+}
+.design-points ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.7rem; }
+.design-points li {
+    font-size: var(--body-size); line-height: 1.55; padding-left: 1.25rem; position: relative;
+    color: var(--text-dark);
+}
+.design-points li::before {
+    content: ""; position: absolute; left: 0; top: 0.65em;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--accent-blue);
+}
+.design-points li strong { color: var(--accent-blue); font-weight: 700; }
+
+.overhangs { display: flex; flex-direction: column; gap: clamp(0.6rem, 1.5vh, 1rem); min-height: 0; }
+.oh-block {
+    padding: clamp(0.75rem, 1.6vw, 1.15rem); background: var(--bg-dark); color: var(--text-light);
+    border-radius: 4px; border-top: 3px solid var(--accent-blue);
+}
+.oh-block .oh-label {
+    font-size: var(--xs-size); letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent-blue-soft); font-family: 'JetBrains Mono', monospace; font-weight: 700;
+    margin-bottom: 0.45rem;
+}
+.oh-block .oh-seq {
+    font-family: 'JetBrains Mono', monospace; font-size: var(--small-size);
+    color: var(--text-light); line-height: 1.5; padding: 0.45rem 0;
+    border-bottom: 1px solid var(--border-light); margin-bottom: 0.5rem; word-break: break-all;
+    font-weight: 500; letter-spacing: 0.02em;
+}
+.oh-block .oh-anno { font-size: var(--xs-size); line-height: 1.6; color: var(--text-light-dim); }
+.oh-block .oh-tag {
+    display: inline-block; padding: 0.2em 0.5em; margin: 0.15em 0.2em 0.15em 0;
+    border-radius: 2px; font-weight: 600; font-size: 0.95em;
+}
+.oh-tag.oh-his { background: rgba(45,160,106,0.2); color: #6ec98a; }
+.oh-tag.oh-tev { background: var(--accent-blue-bg-strong); color: var(--accent-blue-soft); }
+.oh-tag.oh-ser { background: rgba(255,255,255,0.08); color: var(--text-light); }
+
+/* ===========================================
+   SLIDE 13 — VALIDATION WORKFLOW (NEW)
+   =========================================== */
+#s13 .workflow-list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.4rem, 1vh, 0.75rem);
+    flex: 1;
+    min-height: 0;
+}
+.wf-step {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: clamp(0.65rem, 1.5vw, 1.25rem);
+    align-items: center;
+    padding: clamp(0.45rem, 1.1vh, 0.8rem) clamp(0.7rem, 1.4vw, 1.15rem);
+    border-radius: 4px;
+    background: var(--bg-soft);
+    border-left: 4px solid var(--text-dim);
+}
+.wf-step.done    { border-left-color: var(--accent-blue);    background: var(--accent-blue-bg); }
+.wf-step.weak    { border-left-color: var(--accent-warn);    background: rgba(224,138,60,0.08); }
+.wf-step.missing { border-left-color: var(--accent-danger);  background: rgba(208,80,80,0.08); }
+.wf-step.future  { opacity: 0.6; }
+.wf-step .wf-num {
+    font-family: 'Manrope', sans-serif; font-weight: 800;
+    font-size: var(--h2-size); color: var(--accent-blue);
+    width: 1.4em; text-align: center; line-height: 1;
+}
+.wf-step.weak .wf-num    { color: var(--accent-warn); }
+.wf-step.missing .wf-num { color: var(--accent-danger); }
+.wf-step.future .wf-num  { color: var(--text-dim); }
+.wf-step .wf-name { font-size: var(--body-size); font-weight: 700; color: var(--text-dark); line-height: 1.3; }
+.wf-step .wf-name .badge { font-weight: 500; font-size: 0.82em; margin-left: 0.4em; }
+.wf-step.weak .wf-name .badge { color: var(--accent-warn); }
+.wf-step.missing .wf-name .badge { color: var(--accent-danger); }
+.wf-step .wf-detail {
+    font-size: var(--small-size); color: var(--text-mid);
+    font-family: 'JetBrains Mono', monospace; margin-top: 0.2rem; line-height: 1.45;
+}
+.wf-step .wf-tag {
+    font-size: var(--xs-size); padding: 0.3rem 0.7rem; border-radius: 3px;
+    text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700;
+    white-space: nowrap;
+}
+.wf-tag.tag-done    { background: var(--accent-blue);          color: var(--text-light); }
+.wf-tag.tag-next    { background: rgba(67,97,238,0.15);        color: var(--accent-blue); }
+.wf-tag.tag-weak    { background: var(--accent-warn);          color: var(--text-light); }
+.wf-tag.tag-missing { background: var(--accent-danger);        color: var(--text-light); }
+.wf-tag.tag-future  { background: rgba(10,10,10,0.06);         color: var(--text-mid); }
+
+/* ===========================================
+   SLIDE 12 — Q&A
+   =========================================== */
+#s16 { display: grid; grid-template-rows: 1fr auto; padding: 0; }
+#s16 .qa-main {
+    background: var(--bg-white);
+    padding: var(--slide-padding);
+    display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+}
+#s16 .qa-foot {
+    background: var(--bg-dark); color: var(--text-light);
+    padding: clamp(1.5rem, 3vw, 2.5rem) var(--slide-padding);
+    border-top: 6px solid var(--accent-blue);
+}
+#s16 h1 {
+    font-size: var(--title-size); color: var(--text-dark);
+    letter-spacing: -0.035em;
+}
+#s16 h1 .em { color: var(--accent-blue); }
+#s16 .qa-divider {
+    margin: clamp(1rem, 3vh, 2rem) auto;
+    width: clamp(4rem, 10vw, 8rem); height: 3px;
+    background: var(--accent-blue);
+}
+#s16 .qa-sub {
+    font-size: var(--h3-size); color: var(--text-mid); font-weight: 400;
+}
+#s16 .sources-title {
+    font-size: var(--xs-size); letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent-blue-soft); font-weight: 700; margin-bottom: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+}
+#s16 .sources {
+    font-family: 'JetBrains Mono', monospace; font-size: var(--small-size);
+    color: var(--text-light-dim); line-height: 1.8; max-width: min(80ch, 90vw);
+}
+#s16 .sources .src-label { color: var(--accent-blue-soft); font-weight: 600; }
+
+/* ===========================================
+   ANIMATIONS — STAGGERED REVEAL
+   =========================================== */
+.slide.active [data-reveal] { animation: revealUp 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.slide.active [data-reveal="2"] { animation-delay: 0.1s; }
+.slide.active [data-reveal="3"] { animation-delay: 0.2s; }
+.slide.active [data-reveal="4"] { animation-delay: 0.3s; }
+.slide.active [data-reveal="5"] { animation-delay: 0.4s; }
+.slide.active [data-reveal="6"] { animation-delay: 0.5s; }
+.slide.active [data-reveal="7"] { animation-delay: 0.6s; }
+@keyframes revealUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===========================================
+   PRINT FALLBACK
+   =========================================== */
+@media print {
+    html { scroll-snap-type: none; }
+    .slide { page-break-after: always; }
+    .nav-dots, .kb-hint { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV DOTS + KB HINT -->
+<nav class="nav-dots" id="navDots"></nav>
+<div class="kb-hint">↑ ↓ · SPACE · 1–9 · 0 = Q&amp;A · F11 풀스크린</div>
+
+<!-- =====================================================
+     SLIDE 1 — TITLE (Two-panel split)
+     ===================================================== -->
+<section class="slide" id="s1" data-title="Title">
+  <div class="panel-top">
+    <div class="brand-mark">JYLab · ColH Zymogen</div>
+    <div class="date-mark">2026-05-21</div>
+    <div data-reveal class="eyebrow">미팅 진행 보고</div>
+    <h1 data-reveal="2">ColH PD apo Binder<br><span class="accent">— BindCraft Top 5</span></h1>
+    <div data-reveal="3" class="tagline">apo form 단일 trial에서 accepted 101개. AF3 cross-prediction으로 37개 신뢰 후보. Cloning 진입 결정.</div>
+  </div>
+  <div class="panel-bottom">
+    <div class="quote-area" data-reveal="4">
+      <div class="lbl">Key Pivot</div>
+      <div class="quote">"holo → apo 전환만으로 accepted가 <span class="em">14에서 101로 7배</span> 증가."</div>
+    </div>
+    <div class="metrics">
+      <div class="metric" data-reveal="5"><div class="num">101</div><div class="lbl">BindCraft Accepted</div></div>
+      <div class="metric" data-reveal="6"><div class="num">37<span class="unit">/101</span></div><div class="lbl">AF3 ipTM ≥ 0.8</div></div>
+      <div class="metric" data-reveal="7"><div class="num">Top 5</div><div class="lbl">Cloning 진입</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 2 — BIG NUMBERS
+     ===================================================== -->
+<section class="slide" id="s2" data-title="한 줄 요약">
+  <div class="slide-inner">
+    <div class="slide-header" data-reveal>
+      <div class="slide-eyebrow">한 줄 요약</div>
+      <div class="slide-meta">02 / 16</div>
+    </div>
+    <div class="stats-hero">
+      <div class="stat-big" data-reveal="2">
+        <div class="num">101</div>
+        <div class="num-sub">accepted</div>
+        <div class="lbl">BindCraft</div>
+        <div class="desc">apo 1st trial · 단일 run</div>
+      </div>
+      <div class="stat-big featured" data-reveal="3">
+        <div class="num">37<span style="color:rgba(255,255,255,0.6);font-weight:500;">/101</span></div>
+        <div class="num-sub">high confidence</div>
+        <div class="lbl">AF3 ipTM ≥ 0.8</div>
+        <div class="desc">독립 cross-prediction 통과</div>
+      </div>
+      <div class="stat-big" data-reveal="4">
+        <div class="num">Top 5</div>
+        <div class="num-sub">→ Cloning</div>
+        <div class="lbl">진입 후보</div>
+        <div class="desc">BC + AF3 양쪽 통과</div>
+      </div>
+    </div>
+    <div class="narrative" data-reveal="5">
+      ColH PD <span class="em">apo form (4ar1)</span>을 타깃으로 BindCraft 1차 trial을 돌려 101개 accepted binder 확보.
+      101개 전부 AF3 cross-prediction으로 재검증한 뒤 top 5를 정량·시각 양면에서 비교해 cloning + 발현 스크리닝 진입.
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 3 — RFDIFF VS BINDCRAFT
+     ===================================================== -->
+<section class="slide" id="s3" data-title="노선 변경">
+  <div class="slide-inner">
+    <div class="slide-header" data-reveal>
+      <div class="slide-eyebrow">노선 변경 · Pipeline Pivot</div>
+      <div class="slide-meta">03 / 16</div>
+    </div>
+    <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.75rem,2vh,1.25rem);">RFdiffusion → <span class="em">BindCraft</span></h2>
+    <div class="compare-grid">
+      <div class="compare-col old" data-reveal="3">
+        <span class="tag">기존</span>
+        <h3>RFdiffusion + ProteinMPNN + AF3</h3>
+        <ul>
+          <li>backbone → 서열 → AF3 검증의 3단 분리</li>
+          <li>num_designs 1000+ 필요, 후보 거르기 후행</li>
+          <li>ColH PD 1~4차 시도에서 accepted 0~1개</li>
+          <li>길이/구조 제어 약함</li>
+        </ul>
+      </div>
+      <div class="compare-col new" data-reveal="4">
+        <span class="tag">현재 채택</span>
+        <h3>BindCraft</h3>
+        <ul>
+          <li>end-to-end (AF2 hallucination + MPNN + filter)</li>
+          <li>hotspot · 길이 · helix bias 단일 설정 제어</li>
+          <li>filter 만족 design만 accepted 저장</li>
+          <li>apo 1st trial 단독으로 <span class="hl">101 accepted</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-note" data-reveal="5">
+      ColH는 1~5차 trial 누계 15개에서 정체 → BindCraft 전환 후 단일 trial로 <span class="em">101개 돌파</span>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 4 — MODULAR ASSEMBLY
+     ===================================================== -->
+<section class="slide" id="s4" data-title="Modular Assembly">
+  <div class="slide-inner">
+    <div class="slide-header" data-reveal>
+      <div class="slide-eyebrow">Modular Assembly</div>
+      <div class="slide-meta">04 / 16</div>
+    </div>
+    <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.5rem,1.5vh,1rem);">독립 발현 후 <span class="em">SpyTag/SpyCatcher</span> 결합</h2>
+    <div class="modular-wrap">
+      <table class="module-table" data-reveal="3">
+        <thead><tr><th>모듈</th><th>구성</th><th>기능</th></tr></thead>
+        <tbody>
+          <tr><td>CU (full)</td><td>ST – AD – PD – ABD</td><td>활성화 후 콜라겐 분해</td></tr>
+          <tr><td>Binder</td><td>SC – linker – binder – His6</td><td>PD cleft 마스킹</td></tr>
+          <tr><td>PD 단독</td><td>His – PD</td><td>BLI / IP 단독 평가용</td></tr>
+        </tbody>
+      </table>
+      <div class="mechanism" data-reveal="4">
+        <div class="mech-state off">
+          <div class="state-label">활성화 전 · tethered</div>
+          <div class="state-name">PD 활성 OFF</div>
+          <div class="state-eq">C<sub>eff</sub> <span class="hl">~mM</span> ≫ K<sub>d</sub> ~μM<br>→ binder가 cleft 덮어 마스킹</div>
+        </div>
+        <div class="mech-arrow">
+          →
+          <div class="label-arrow">MMP cleavage</div>
+        </div>
+        <div class="mech-state on">
+          <div class="state-label">활성화 후 · TME</div>
+          <div class="state-name">PD 활성 복원</div>
+          <div class="state-eq">C<sub>eff</sub> <span class="hl">→ 0</span>, 체내 nM ≪ K<sub>d</sub><br>→ binder 해리 → 콜라겐 분해</div>
+        </div>
+      </div>
+      <div class="foot-note" data-reveal="5">단일 폴리펩타이드 회피 — IB 회피 · 변수 분리 · binder 스크리닝 용이</div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 5 — TAG/LINKER
+     ===================================================== -->
+<section class="slide" id="s5" data-title="Tag 설계">
+  <div class="slide-inner">
+    <div class="slide-header" data-reveal>
+      <div class="slide-eyebrow">Tag / Linker 설계</div>
+      <div class="slide-meta">05 / 16</div>
+    </div>
+    <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.75rem,2vh,1.25rem);">세 가지 <span class="em">발현 모듈</span></h2>
+    <div class="tag-list">
+      <div class="tag-row" data-reveal="3">
+        <div class="tag-name">ST-CU-twin strep</div>
+        <div class="tag-seq">
+          <span class="seg">MGSS</span><span class="seg">ST (13 aa)</span><span class="seg">GSGESGSG</span><span class="seg body">CU 본체</span><span class="seg purify">twin-strep</span>
+        </div>
+      </div>
+      <div class="tag-row" data-reveal="4">
+        <div class="tag-name">PD-twin strep</div>
+        <div class="tag-seq">
+          <span class="seg">M</span><span class="seg body">PD (active domain)</span><span class="seg purify">twin-strep</span>
+        </div>
+      </div>
+      <div class="tag-row" data-reveal="5">
+        <div class="tag-name">Binder-His</div>
+        <div class="tag-seq">
+          <span class="seg">M</span><span class="seg">SC (SpyCatcher)</span><span class="seg">linker</span><span class="seg body">binder</span><span class="seg purify">His<sub>6</sub></span>
+        </div>
+      </div>
+    </div>
+    <div class="foot-note" data-reveal="6">기존 Ferritin vector primer 재사용 불가 → 신규 primer <span class="em">4쌍 설계 완료</span> (260428)</div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 6 — BINDCRAFT TRIAL TABLE
+     ===================================================== -->
+<section class="slide" id="s6" data-title="BindCraft Trials">
+  <div class="slide-inner">
+    <div class="slide-header" data-reveal>
+      <div class="slide-eyebrow">BindCraft Trial 종합</div>
+      <div class="slide-meta">06 / 16</div>
+    </div>
+    <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.75rem,2vh,1.25rem);">Holo → <span class="em">apo</span> 전환의 결정적 효과</h2>
+    <div class="trial-grid">
+      <table class="trial-table" data-reveal="3">
+        <thead><tr><th>Trial</th><th>Target</th><th>Hotspot</th><th>Length</th><th>Accepted</th></tr></thead>
+        <tbody>
+          <tr class="dim"><td>1차 (holo)</td><td>4ARF</td><td>A533, A444, A423</td><td>40–80</td><td>0</td></tr>
+          <tr><td>2차</td><td>4ARF</td><td>A533, A423</td><td>60–120</td><td>1</td></tr>
+          <tr class="dim"><td>3차 (short)</td><td>4ARF</td><td>A533, A423</td><td>30–45</td><td>0</td></tr>
+          <tr class="dim"><td>4차 (nohot)</td><td>4ARF</td><td>—</td><td>40–60</td><td>0</td></tr>
+          <tr><td>5차</td><td>4ARF</td><td>A533, A423</td><td>60–120</td><td>14</td></tr>
+          <tr class="highlight"><td>apo 1차 (현재)</td><td>4ar1_apo</td><td>A533, A423</td><td>60–120</td><td>101</td></tr>
+        </tbody>
+      </table>
+      <div class="pivot-callout" data-reveal="4">
+        <div class="pc-label">Key Pivot</div>
+        <div class="pc-title">holo → apo</div>
+        <div class="pc-body">inhibitor-bound cleft는 닫혀 binder 접근 표면이 좁음. apo는 cleft가 열려 hotspot 도달 용이.</div>
+        <div class="pc-big">14 <span class="arrow">→</span> 101</div>
+        <div class="pc-body">단일 trial 기준 7배 증가</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 7 — AF3 CROSS-PREDICTION (CHART)
+     ===================================================== -->
+<section class="slide" id="s7" data-title="AF3 검증">
+  <div class="slide-inner">
+    <div class="slide-header" data-reveal>
+      <div class="slide-eyebrow">AF3 Cross-Prediction</div>
+      <div class="slide-meta">07 / 16</div>
+    </div>
+    <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.5rem,1.5vh,1rem);">독립 검증으로 <span class="em">37개</span> 신뢰 후보</h2>
+    <div class="af3-grid">
+      <div class="chart-wrap" data-reveal="3">
+        <div class="chart-title">101 designs · AF3 ipTM bucket</div>
+        <canvas id="af3Chart"></canvas>
+      </div>
+      <div class="af3-side">
+        <div class="af3-stat-block" data-reveal="4">
+          <div class="blk-title">신뢰 구간</div>
+          <div class="blk-row"><span class="lbl">high (≥ 0.8)</span><span class="v hl">37</span></div>
+          <div class="blk-row"><span class="lbl">mid (0.6–0.8)</span><span class="v">19</span></div>
+          <div class="blk-row"><span class="lbl">low (&lt; 0.6)</span><span class="v">45</span></div>
+        </div>
+        <div class="af3-stat-block" data-reveal="5">
+          <div class="blk-title">전체 지표 통계</div>
+          <div class="blk-row"><span class="lbl">AF3 ipTM</span><span class="v">0.16</span><span class="v hl">0.63</span><span class="v">0.94</span></div>
+          <div class="blk-row"><span class="lbl">i_pae</span><span class="v">4.5</span><span class="v hl">13.1</span><span class="v">26.6</span></div>
+          <div class="blk-row" style="font-size:var(--xs-size);color:var(--text-dim);"><span class="lbl">&nbsp;</span><span>min</span><span>mean</span><span>max</span></div>
+        </div>
+        <div class="af3-message" data-reveal="6">
+          절반(<span class="em">45/101</span>)이 low → BindCraft 단독 신뢰는 위험. 상위 37개를 후보군, top 5 우선 cloning.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 8 — TOP 10 TABLE
+     ===================================================== -->
+<section class="slide" id="s8" data-title="Top 10 정량">
+  <div class="slide-inner">
+    <div class="slide-header" data-reveal>
+      <div class="slide-eyebrow">Top 10 정량 비교</div>
+      <div class="slide-meta">08 / 16</div>
+    </div>
+    <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.5rem,1.5vh,1rem);">BindCraft <span class="em">+</span> AF3 양쪽 점수</h2>
+    <div class="top10-table-wrap" data-reveal="3">
+      <table class="top10-table">
+        <thead>
+          <tr>
+            <th>#</th><th>Design</th><th>Len</th><th>BC i_pTM</th><th>AF3 ipTM</th><th>ΔG</th><th>Hot RMSD</th><th>Helix%</th><th>AF3 rank</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="top5"><td class="rank-cell">1</td><td class="design-cell">l96_s354818_mpnn2</td><td>96</td><td class="hot">0.90</td><td class="hot">0.93</td><td>−63.5</td><td>1.35</td><td>78</td><td>6</td></tr>
+          <tr class="top5"><td class="rank-cell">2</td><td class="design-cell">l78_s205703_mpnn16</td><td>78</td><td>0.89</td><td>0.89</td><td>−70.3</td><td>1.72</td><td>67</td><td>20</td></tr>
+          <tr class="top5"><td class="rank-cell">3</td><td class="design-cell">l68_s564178_mpnn11</td><td>68</td><td>0.88</td><td class="warn">0.68</td><td>−58.1</td><td>1.21</td><td>81</td><td>50</td></tr>
+          <tr class="top5"><td class="rank-cell">4</td><td class="design-cell">l77_s998973_mpnn13</td><td>77</td><td>0.87</td><td class="warn">0.72</td><td>−45.5</td><td>1.04</td><td>86</td><td>48</td></tr>
+          <tr class="top5"><td class="rank-cell">5</td><td class="design-cell">l88_s170448_mpnn6</td><td>88</td><td>0.87</td><td class="hot">0.89</td><td>−64.3</td><td>1.40</td><td>79</td><td>21</td></tr>
+          <tr><td>6</td><td class="design-cell">l113_s776041_mpnn2</td><td>113</td><td>0.87</td><td>0.92</td><td>−52.1</td><td>1.18</td><td>89</td><td>4</td></tr>
+          <tr><td>7</td><td class="design-cell">l77_s998973_mpnn14</td><td>77</td><td>0.86</td><td class="warn">0.49</td><td>−46.4</td><td>1.05</td><td>86</td><td>69</td></tr>
+          <tr><td>8</td><td class="design-cell">l109_s693003_mpnn7</td><td>109</td><td>0.86</td><td>0.94</td><td>−54.8</td><td>1.32</td><td>88</td><td>—</td></tr>
+          <tr><td>9</td><td class="design-cell">l109_s648895_mpnn14</td><td>109</td><td>0.86</td><td>0.92</td><td>−49.2</td><td>1.27</td><td>84</td><td>—</td></tr>
+          <tr><td>10</td><td class="design-cell">l113_s776041_mpnn8</td><td>113</td><td>0.86</td><td>0.89</td><td>−53.0</td><td>1.19</td><td>88</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="top10-legend" data-reveal="4">
+      <div class="legend-cell success"><span class="lt">Rank 1</span>BC + AF3 양쪽 최상위, ΔG −63.5 → 최우선 추진</div>
+      <div class="legend-cell"><span class="lt">Rank 2, 5</span>BC top + AF3 ≥ 0.89 → 동반 추진</div>
+      <div class="legend-cell warn"><span class="lt">Rank 3, 4</span>BC 높지만 AF3 떨어짐 → 관찰 후 결정</div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 9 — TOP 5 OVERVIEW
+     ===================================================== -->
+<section class="slide" id="s9" data-title="Top 5 Overview">
+  <div class="slide-inner">
+    <div class="slide-header" data-reveal>
+      <div class="slide-eyebrow">Top 5 Overview · ChimeraX renders</div>
+      <div class="slide-meta">09 / 16</div>
+    </div>
+    <div class="top5-grid" data-reveal="2">
+      <div class="binder-card"><img src="renders/binder1_render.png" alt="Rank 1"><div class="b-rank">Rank 1</div><div class="b-name">l96_s354818</div><div class="b-stats">BC <span class="v">0.90</span> · AF3 <span class="v">0.93</span><br>ΔG <span class="v">−63.5</span> · 96 aa</div></div>
+      <div class="binder-card"><img src="renders/binder2_render.png" alt="Rank 2"><div class="b-rank">Rank 2</div><div class="b-name">l78_s205703</div><div class="b-stats">BC <span class="v">0.89</span> · AF3 <span class="v">0.89</span><br>ΔG <span class="v">−70.3</span> · 78 aa</div></div>
+      <div class="binder-card"><img src="renders/binder3_render.png" alt="Rank 3"><div class="b-rank">Rank 3</div><div class="b-name">l68_s564178</div><div class="b-stats">BC <span class="v">0.88</span> · AF3 <span class="v">0.68</span><br>ΔG <span class="v">−58.1</span> · 68 aa</div></div>
+      <div class="binder-card"><img src="renders/binder4_render.png" alt="Rank 4"><div class="b-rank">Rank 4</div><div class="b-name">l77_s998973</div><div class="b-stats">BC <span class="v">0.87</span> · AF3 <span class="v">0.72</span><br>ΔG <span class="v">−45.5</span> · 77 aa</div></div>
+      <div class="binder-card"><img src="renders/binder5_render.png" alt="Rank 5"><div class="b-rank">Rank 5</div><div class="b-name">l88_s170448</div><div class="b-stats">BC <span class="v">0.87</span> · AF3 <span class="v">0.89</span><br>ΔG <span class="v">−64.3</span> · 88 aa</div></div>
+    </div>
+    <div class="render-caption">회색 surface = ColH PD · 무지개 cartoon = binder N→C · 빨간 sticks = hotspot ASN83/ALA193 (입력 A423/A533)</div>
+    <div class="pae-section">
+      <div class="pae-col" data-reveal="3">
+        <div class="pae-label">BindCraft PAE · 디자인 단계</div>
+        <div class="pae-row">
+          <img src="plots/binder1_bc_pae.png" alt=""><img src="plots/binder2_bc_pae.png" alt=""><img src="plots/binder3_bc_pae.png" alt=""><img src="plots/binder4_bc_pae.png" alt=""><img src="plots/binder5_bc_pae.png" alt="">
+        </div>
+      </div>
+      <div class="pae-col" data-reveal="4">
+        <div class="pae-label">AF3 PAE · Cross-validation</div>
+        <div class="pae-row">
+          <img src="plots/binder1_af3_pae.png" alt=""><img src="plots/binder2_af3_pae.png" alt=""><img src="plots/binder3_af3_pae.png" alt=""><img src="plots/binder4_af3_pae.png" alt=""><img src="plots/binder5_af3_pae.png" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 10 — NGL INTERACTIVE
+     ===================================================== -->
+<section class="slide" id="s10" data-title="Interactive">
+  <div class="slide-inner">
+    <div class="slide-header" data-reveal>
+      <div class="slide-eyebrow">Top 5 · Interactive Structure</div>
+      <div class="slide-meta">10 / 16</div>
+    </div>
+    <div class="ngl-wrap">
+      <div class="ngl-left" data-reveal="2">
+        <div class="ngl-buttons">
+          <button class="ngl-btn active" data-i="0">Rank 1</button>
+          <button class="ngl-btn" data-i="1">Rank 2</button>
+          <button class="ngl-btn" data-i="2">Rank 3</button>
+          <button class="ngl-btn" data-i="3">Rank 4</button>
+          <button class="ngl-btn" data-i="4">Rank 5</button>
+        </div>
+        <div id="ngl-stage"></div>
+      </div>
+      <div class="ngl-right" data-reveal="3">
+        <div id="ngl-name" class="ngl-info-name">Rank 1 · l96_s354818_mpnn2</div>
+        <div class="ngl-info-grid" id="ngl-info"></div>
+        <div class="ngl-legend">
+          <div class="lg-title">표시</div>
+          <span class="swatch sw-gray"></span> target chain A (gray surface)<br>
+          <span class="swatch sw-rainbow"></span> binder chain B (rainbow N→C)<br>
+          <span class="swatch sw-red"></span> hotspot A83 / A193
+          <div class="lg-title" style="margin-top:0.7em;">조작</div>
+          드래그·회전 / 휠·줌 / Shift+드래그·이동
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 11 — CLONING PROGRESS
+     ===================================================== -->
+<section class="slide" id="s11" data-title="Cloning">
+  <div class="slide-inner">
+    <div class="slide-header" data-reveal>
+      <div class="slide-eyebrow">Phase 1 · 다음 단계</div>
+      <div class="slide-meta">11 / 16</div>
+    </div>
+    <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.5rem,1.5vh,1rem);">Cloning + 발현 <span class="em">스크리닝</span></h2>
+    <div class="clone-grid">
+      <div class="clone-tasks" data-reveal="3">
+        <div class="clone-task done" data-pct="100">
+          <div class="step-num">1</div>
+          <div>
+            <div class="step-name">ColH cloning · ST-CU-twin strep + PD-twin strep <span class="check">✓</span></div>
+            <div class="step-detail">PD sequencing OK · ST-CU 재주문 후 해결 — 발현·정제 단계 진입 가능</div>
+          </div>
+          <div class="step-progress"><div class="step-bar"><div class="fill" style="width:100%;"></div></div><div class="step-pct">100%</div></div>
+        </div>
+        <div class="clone-task" data-pct="80">
+          <div class="step-num">2</div>
+          <div>
+            <div class="step-name">Binder gene 합성 주문 (top 5) <span class="warn">4/5</span></div>
+            <div class="step-detail">#1·#2·#3·#4 도착 · <strong>#5 l88_s170448 미배송</strong> (재발주 검토)</div>
+          </div>
+          <div class="step-progress"><div class="step-bar"><div class="fill" style="width:80%;"></div></div><div class="step-pct">80%</div></div>
+        </div>
+        <div class="clone-task" data-pct="0">
+          <div class="step-num">3</div>
+          <div>
+            <div class="step-name">Binder-His cloning (SC-linker-binder-His6)</div>
+            <div class="step-detail">gene 합성 후 GA cloning</div>
+          </div>
+          <div class="step-progress"><div class="step-bar"><div class="fill" style="width:0%;"></div></div><div class="step-pct">0%</div></div>
+        </div>
+        <div class="clone-task" data-pct="0">
+          <div class="step-num">4</div>
+          <div>
+            <div class="step-name">Col 활성 test 확립</div>
+            <div class="step-detail">binder masking 평가 기반</div>
+          </div>
+          <div class="step-progress"><div class="step-bar"><div class="fill" style="width:0%;"></div></div><div class="step-pct">0%</div></div>
+        </div>
+        <div class="clone-task" data-pct="0">
+          <div class="step-num">5</div>
+          <div>
+            <div class="step-name">PD ↔ Binder IP screening</div>
+            <div class="step-detail">1차 거름 — 약한 binder 사전 제거</div>
+          </div>
+          <div class="step-progress"><div class="step-bar"><div class="fill" style="width:0%;"></div></div><div class="step-pct">0%</div></div>
+        </div>
+        <div class="clone-task" data-pct="0">
+          <div class="step-num">6</div>
+          <div>
+            <div class="step-name">PD BLI (top 5 → top 20 확장 결정)</div>
+            <div class="step-detail">K<sub>d</sub> 정량</div>
+          </div>
+          <div class="step-progress"><div class="step-bar"><div class="fill" style="width:0%;"></div></div><div class="step-pct">0%</div></div>
+        </div>
+      </div>
+
+      <div class="yield-block" data-reveal="4">
+        <div class="yb-title">목표 발현 수율</div>
+        <div class="yield-row"><div class="yr-name">PD-twin strep</div><div class="yr-target">≥ 5 mg/L</div></div>
+        <div class="yield-note">BLI / IP에 필요</div>
+        <div class="yield-row"><div class="yr-name">ST-CU-twin strep</div><div class="yr-target">≥ 2 mg/L</div></div>
+        <div class="yield-note">masking 평가</div>
+        <div class="yield-row last"><div class="yr-name">SC-binder-His</div><div class="yr-target">≥ 10 mg/L</div></div>
+        <div class="yield-note">IP 1차 필터링 · 양 다량 필요</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 12 — BINDER GENE DESIGN (NEW)
+     ===================================================== -->
+<section class="slide" id="s12" data-title="Binder Design">
+  <div class="slide-inner">
+    <div class="slide-header" data-reveal>
+      <div class="slide-eyebrow">Binder gene 설계 · Vector – His8 – TEV</div>
+      <div class="slide-meta">12 / 16</div>
+    </div>
+    <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.5rem,1.5vh,1rem);">단일 primer로 <span class="em">5 binder 일괄 cloning</span></h2>
+    <div class="construct-box" data-reveal="3">
+      <div class="cb-cell cb-vector">Vector<br><span class="sub">backbone</span></div>
+      <div class="cb-cell cb-his8">His<sub>8</sub><br><span class="sub">정제 tag</span></div>
+      <div class="cb-cell cb-tev">TEV site<br><span class="sub">ENLYFQ ↓ S</span></div>
+      <div class="cb-cell cb-binder">Binder<br><span class="sub">de novo · swap 부위</span></div>
+      <div class="cb-cell cb-stop">stop</div>
+      <div class="cb-cell cb-vector">Vector</div>
+    </div>
+    <div class="design-grid">
+      <div class="design-points" data-reveal="4">
+        <div class="dp-title">설계 전략</div>
+        <ul>
+          <li><strong>Baker lab 방식</strong> — Mb-SC plasmid 재활용, 신규 vector 제작 X</li>
+          <li>모든 binder에 <strong>동일 5'/3' overhang</strong> → 단일 primer set으로 5개 일괄 cloning</li>
+          <li><strong>SC-fusion 아님</strong> — His로 정제 후 TEV 절단해 binder 단독 평가 (fusion partner 영향 제거)</li>
+        </ul>
+      </div>
+      <div class="overhangs">
+        <div class="oh-block" data-reveal="5">
+          <div class="oh-label">5' overhang · 공통</div>
+          <div class="oh-seq">catCAT TCTGAAAATCTGTACTTCCAA AGC</div>
+          <div class="oh-anno"><span class="oh-tag oh-his">His<sub>8</sub> 끝</span><span class="oh-tag oh-tev">TEV · ENLYFQ</span><span class="oh-tag oh-ser">Ser · 절단 후 N-term</span></div>
+        </div>
+        <div class="oh-block" data-reveal="6">
+          <div class="oh-label">3' overhang · 공통</div>
+          <div class="oh-seq">GGATCC GAATTC GAGCTCCG</div>
+          <div class="oh-anno"><span class="oh-tag oh-tev">BamHI</span><span class="oh-tag oh-tev">EcoRI</span><span class="oh-tag oh-ser">vector backbone</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 13 — VALIDATION WORKFLOW (NEW)
+     ===================================================== -->
+<section class="slide" id="s13" data-title="Workflow">
+  <div class="slide-inner">
+    <div class="slide-header" data-reveal>
+      <div class="slide-eyebrow">Validation Workflow · 표준 + 내 plan 매핑</div>
+      <div class="slide-meta">13 / 16</div>
+    </div>
+    <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.4rem,1.2vh,0.85rem);">7 step 중 <span class="em">약점 2곳</span> 보강 필요</h2>
+    <div class="workflow-list">
+      <div class="wf-step done" data-reveal="3">
+        <div class="wf-num">1</div>
+        <div>
+          <div class="wf-name">Cloning</div>
+          <div class="wf-detail">pET-29b 기반 vector · N-term His8 – TEV – binder</div>
+        </div>
+        <div class="wf-tag tag-done">내 plan ✓</div>
+      </div>
+      <div class="wf-step" data-reveal="3">
+        <div class="wf-num">2</div>
+        <div>
+          <div class="wf-name">E. coli 발현</div>
+          <div class="wf-detail">Lemo21(DE3) or BL21 · autoinduction · 5–50 mL 소량 컬쳐로 충분</div>
+        </div>
+        <div class="wf-tag tag-next">다음 단계</div>
+      </div>
+      <div class="wf-step weak" data-reveal="4">
+        <div class="wf-num">3</div>
+        <div>
+          <div class="wf-name">정제 + 품질 평가 <span class="badge">★ 약점</span></div>
+          <div class="wf-detail">Ni-NTA IMAC · SDS-PAGE 순도 · SEC (mono vs aggregate) · yield 측정</div>
+        </div>
+        <div class="wf-tag tag-weak">보강</div>
+      </div>
+      <div class="wf-step missing" data-reveal="4">
+        <div class="wf-num">4</div>
+        <div>
+          <div class="wf-name">Fold validation <span class="badge">★ plan에 빠짐</span></div>
+          <div class="wf-detail">CD spectroscopy (α-helix/β-sheet 시그널) · Tm 측정 (CD melting / DSF) — 디자인대로 접혔는지</div>
+        </div>
+        <div class="wf-tag tag-missing">추가</div>
+      </div>
+      <div class="wf-step" data-reveal="5">
+        <div class="wf-num">5</div>
+        <div>
+          <div class="wf-name">Binding 정량</div>
+          <div class="wf-detail">BLI 또는 SPR · K<sub>d</sub> 측정</div>
+        </div>
+        <div class="wf-tag tag-next">내 plan ✓</div>
+      </div>
+      <div class="wf-step" data-reveal="5">
+        <div class="wf-num">6</div>
+        <div>
+          <div class="wf-name">Functional assay (target-specific)</div>
+          <div class="wf-detail">ColH: Collagenase activity inhibition (Sub1) — 우선순위 높음</div>
+        </div>
+        <div class="wf-tag tag-next">내 plan ✓</div>
+      </div>
+      <div class="wf-step future" data-reveal="6">
+        <div class="wf-num">7</div>
+        <div>
+          <div class="wf-name">구조 검증 (Top hit only)</div>
+          <div class="wf-detail">X-ray 또는 Cryo-EM · design model과 비교 — 논문화 단계</div>
+        </div>
+        <div class="wf-tag tag-future">미래</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 14 — MARCO TRIAL OVERVIEW
+     ===================================================== -->
+<section class="slide" id="s14" data-title="MARCO Trial">
+  <div class="slide-inner">
+    <div class="slide-header" data-reveal>
+      <div class="slide-eyebrow">두 번째 Target · MARCO SRCR</div>
+      <div class="slide-meta">14 / 16</div>
+    </div>
+    <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.5rem,1.5vh,1rem);">MARCO BindCraft · <span class="em">13 차 trial</span> 종합</h2>
+    <div class="trial-grid">
+      <div style="display:flex;flex-direction:column;min-height:0;overflow:hidden;" data-reveal="3">
+        <table class="trial-table marco-table">
+          <thead><tr><th>Trial</th><th>Hotspot</th><th>Length</th><th>Filter</th><th>Acc.</th><th>Rej.</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr class="dim"><td>1</td><td>auto</td><td>60–100</td><td>default</td><td>0</td><td>3</td><td>✓</td></tr>
+            <tr class="dim"><td>2</td><td>A470, A473</td><td>60–100</td><td>default</td><td>0</td><td>0</td><td>✓</td></tr>
+            <tr><td>3</td><td>A480, A508</td><td>60–100</td><td>default</td><td>4</td><td>38</td><td>✓</td></tr>
+            <tr class="dim"><td>4</td><td>auto</td><td>60–100</td><td>default</td><td>0</td><td>7</td><td>✓</td></tr>
+            <tr><td>5</td><td>A470, A473</td><td>60–150</td><td>default</td><td>1</td><td>11</td><td>✓</td></tr>
+            <tr><td>6</td><td>A480, A508</td><td>60–150</td><td>default</td><td>2</td><td>6</td><td>✓</td></tr>
+            <tr><td>7</td><td>A480, A508</td><td>60–120</td><td>default</td><td>18</td><td>163</td><td>✓</td></tr>
+            <tr><td>8</td><td>A480, A508</td><td>60–120</td><td>relaxed_hyd</td><td>6</td><td>10</td><td>✓</td></tr>
+            <tr><td>9</td><td>A470, A472, A473</td><td>60–120</td><td>default</td><td>1</td><td>4</td><td>✓</td></tr>
+            <tr class="dim"><td>10</td><td>A470, A472, A473</td><td>45–70</td><td>default</td><td>0</td><td>18</td><td>✓</td></tr>
+            <tr><td>11</td><td>A470, A473</td><td>60–150</td><td>default</td><td>2</td><td>27</td><td>✓</td></tr>
+            <tr><td>12</td><td>A508, A511, A506</td><td>60–120</td><td>default</td><td>1</td><td>36</td><td>✓</td></tr>
+            <tr class="highlight"><td>13</td><td>A508</td><td>60–120</td><td>default</td><td>70</td><td>658</td><td>⏳ running</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pivot-callout" data-reveal="4">
+        <div class="pc-label">Hotspot Search</div>
+        <div class="pc-title">A508 단독 hit</div>
+        <div class="pc-body">A470/473 → A480/508 → 다중 hotspot 시도 → <span style="color:var(--accent-blue-soft);font-weight:700;">A508 단독</span>에서 가장 높은 수율.</div>
+        <div class="pc-big">70 <span style="color:rgba(255,255,255,0.5);font-size:0.6em;">accepted</span></div>
+        <div class="pc-body">13차 trial · 진행 중 (running)</div>
+        <div class="pc-body" style="border-top:1px solid var(--border-light);padding-top:0.6rem;margin-top:0.4rem;">
+          누계 <span style="color:var(--accent-blue-soft);font-weight:700;">105 accepted</span> · ColH PD apo와 다른 결합 모드
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 15 — MARCO TOP 10
+     ===================================================== -->
+<section class="slide" id="s15" data-title="MARCO Top 10">
+  <div class="slide-inner">
+    <div class="slide-header" data-reveal>
+      <div class="slide-eyebrow">MARCO · i_pTM Top 10 후보</div>
+      <div class="slide-meta">15 / 16</div>
+    </div>
+    <h2 class="slide-title" data-reveal="2" style="margin-bottom:clamp(0.5rem,1.5vh,1rem);">실험 1순위 <span class="em">추천군</span></h2>
+    <div class="top10-table-wrap" data-reveal="3">
+      <table class="top10-table">
+        <thead>
+          <tr>
+            <th>#</th><th>Design</th><th>i_pTM</th><th>pTM</th><th>i_pAE</th><th>pLDDT</th><th>SC</th><th>ΔG</th><th>Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="top5"><td class="rank-cell">1</td><td class="design-cell">l91_s425975_mpnn1</td><td class="hot">0.76</td><td>0.81</td><td>0.22</td><td>0.85</td><td>0.64</td><td class="hot">−35.4</td><td class="hot">★ 균형</td></tr>
+          <tr class="top5"><td class="rank-cell">2</td><td class="design-cell">l91_s425975_mpnn3</td><td class="hot">0.76</td><td>0.82</td><td>0.22</td><td>0.88</td><td>0.65</td><td>−29.7</td><td></td></tr>
+          <tr class="top5"><td class="rank-cell">3</td><td class="design-cell">l93_s407597_mpnn1</td><td>0.73</td><td>0.80</td><td>0.22</td><td class="hot">0.92</td><td>0.61</td><td>−23.4</td><td></td></tr>
+          <tr class="top5"><td class="rank-cell">4</td><td class="design-cell">l93_s407597_mpnn2</td><td>0.72</td><td>0.79</td><td>0.22</td><td>0.91</td><td>0.66</td><td>−23.8</td><td></td></tr>
+          <tr class="top5"><td class="rank-cell">5</td><td class="design-cell">l102_s689045_mpnn14</td><td>0.71</td><td>0.81</td><td>0.22</td><td class="hot">0.94</td><td>0.63</td><td>−27.5</td><td></td></tr>
+          <tr><td>6</td><td class="design-cell">l109_s99864_mpnn14</td><td>0.71</td><td>0.81</td><td>0.21</td><td class="hot">0.93</td><td>0.62</td><td>−31.6</td><td class="hot">★ 균형</td></tr>
+          <tr><td>7</td><td class="design-cell">l115_s473342_mpnn9</td><td>0.71</td><td>0.78</td><td class="warn">0.27</td><td>0.86</td><td>0.62</td><td>−27.9</td><td></td></tr>
+          <tr><td>8</td><td class="design-cell">l64_s558077_mpnn11</td><td>0.70</td><td>0.81</td><td>0.23</td><td>0.89</td><td>0.63</td><td>−32.0</td><td></td></tr>
+          <tr><td>9</td><td class="design-cell">l79_s965604_mpnn2</td><td>0.69</td><td>0.81</td><td>0.21</td><td>0.89</td><td class="hot">0.69</td><td>−19.7</td><td></td></tr>
+          <tr><td>10</td><td class="design-cell">l109_s99864_mpnn11</td><td>0.69</td><td>0.80</td><td>0.25</td><td class="hot">0.93</td><td>0.62</td><td>−33.5</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="top10-legend" data-reveal="4">
+      <div class="legend-cell success"><span class="lt">l91_s425975_mpnn1</span>i_pTM 0.76 + ΔG −35.4 + SC 0.64 — 모든 지표 균형</div>
+      <div class="legend-cell success"><span class="lt">l109_s99864_mpnn14</span>i_pTM 0.71 + ΔG −31.6 + pLDDT 0.93 — 안정성 ↑</div>
+      <div class="legend-cell"><span class="lt">참고</span>MARCO는 ColH 대비 i_pTM ≤ 0.76 — 더 까다로운 target. AF3 cross-validation 검증 예정.</div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================
+     SLIDE 16 — Q&A
+     ===================================================== -->
+<section class="slide" id="s16" data-title="Q&amp;A">
+  <div class="qa-main">
+    <h1 data-reveal>질문 <span class="em">환영합니다</span></h1>
+    <div class="qa-divider" data-reveal="2"></div>
+    <div class="qa-sub" data-reveal="3">ColH PD apo + MARCO SRCR · BindCraft</div>
+  </div>
+  <div class="qa-foot">
+    <div class="sources-title" data-reveal="4">Data Sources</div>
+    <div class="sources" data-reveal="5">
+      <div><span class="src-label">ColH BindCraft</span> · ColH_PD_apo_bindcraft_ranking.csv (101 designs · 4ar1_apo hotspot A423/A533)</div>
+      <div><span class="src-label">ColH AF3 cross</span> · ColH_PD_apo_AF3_ranking.csv (101 jobs)</div>
+      <div><span class="src-label">MARCO BindCraft</span> · 13 trials · 105 accepted (13차 running)</div>
+    </div>
+  </div>
+</section>
+
+<!-- CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://unpkg.com/ngl@2.3.1/dist/ngl.js"></script>
+
+<script>
+/* ===========================================
+   NAV + KEYBOARD
+   =========================================== */
+const slides = document.querySelectorAll('.slide');
+const navDots = document.getElementById('navDots');
+slides.forEach((s, i) => {
+    const a = document.createElement('a');
+    a.href = '#' + s.id;
+    a.title = s.dataset.title || `Slide ${i + 1}`;
+    navDots.appendChild(a);
+});
+function setActive(idx) {
+    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+    navDots.querySelectorAll('a').forEach((d, i) => d.classList.toggle('active', i === idx));
+}
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+        if (e.isIntersecting && e.intersectionRatio > 0.55) {
+            const idx = Array.from(slides).indexOf(e.target);
+            setActive(idx);
+        }
+    });
+}, { threshold: [0.55, 0.6, 0.7] });
+slides.forEach(s => observer.observe(s));
+
+document.addEventListener('keydown', (e) => {
+    const cur = Array.from(slides).findIndex(s => s.classList.contains('active'));
+    let next = cur;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); next = Math.min(cur + 1, slides.length - 1); }
+    if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft'  || e.key === 'PageUp') { e.preventDefault(); next = Math.max(cur - 1, 0); }
+    if (e.key === 'Home') { next = 0; }
+    if (e.key === 'End')  { next = slides.length - 1; }
+    if (e.key >= '1' && e.key <= '9') { next = parseInt(e.key) - 1; }
+    if (e.key === '0') { next = slides.length - 1; }
+    if (next !== cur) slides[next].scrollIntoView({ behavior: 'smooth' });
+});
+
+document.body.classList.add('show-hint');
+setTimeout(() => document.body.classList.remove('show-hint'), 4500);
+setActive(0);
+
+/* ===========================================
+   SLIDE 7: AF3 BAR CHART
+   =========================================== */
+function initChart() {
+    if (typeof Chart === 'undefined') return setTimeout(initChart, 200);
+    const ctx = document.getElementById('af3Chart');
+    if (!ctx) return;
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['high (≥0.8)', 'mid (0.6–0.8)', 'low (<0.6)'],
+            datasets: [{
+                data: [37, 19, 45],
+                backgroundColor: ['#4361ee', '#94a3b8', '#cbd5e1'],
+                borderWidth: 0,
+                borderRadius: 4,
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            maintainAspectRatio: false,
+            responsive: true,
+            animation: { duration: 1100, easing: 'easeOutCubic' },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: '#0a0a0a',
+                    titleColor: '#6b7fff',
+                    bodyColor: '#ffffff',
+                    borderColor: 'rgba(67,97,238,0.4)',
+                    borderWidth: 1,
+                    titleFont: { family: 'JetBrains Mono', size: 11, weight: '700' },
+                    bodyFont: { family: 'Manrope', size: 14, weight: '600' },
+                    callbacks: { label: (c) => ` ${c.parsed.x} designs` }
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true, max: 60,
+                    grid: { color: 'rgba(10,10,10,0.06)' },
+                    ticks: { color: '#4b5563', font: { family: 'JetBrains Mono', size: 11 } },
+                    title: { display: true, text: 'designs (n=101)', color: '#94a3b8', font: { family: 'JetBrains Mono', size: 10 } }
+                },
+                y: {
+                    grid: { display: false },
+                    ticks: { color: '#0a0a0a', font: { family: 'Manrope', size: 13, weight: '600' } }
+                }
+            }
+        }
+    });
+}
+initChart();
+
+/* ===========================================
+   SLIDE 10: NGL Viewer
+   =========================================== */
+const binders = [
+    { name: 'l96_s354818_mpnn2', pdb: 'structures/binder1_complex.pdb', len: 96, bc_iptm: 0.90, af3_iptm: 0.93, dG: -63.5, helix: 78, rmsd: 1.35 },
+    { name: 'l78_s205703_mpnn16', pdb: 'structures/binder2_complex.pdb', len: 78, bc_iptm: 0.89, af3_iptm: 0.89, dG: -70.3, helix: 67, rmsd: 1.72 },
+    { name: 'l68_s564178_mpnn11', pdb: 'structures/binder3_complex.pdb', len: 68, bc_iptm: 0.88, af3_iptm: 0.68, dG: -58.1, helix: 81, rmsd: 1.21 },
+    { name: 'l77_s998973_mpnn13', pdb: 'structures/binder4_complex.pdb', len: 77, bc_iptm: 0.87, af3_iptm: 0.72, dG: -45.5, helix: 86, rmsd: 1.04 },
+    { name: 'l88_s170448_mpnn6',  pdb: 'structures/binder5_complex.pdb', len: 88, bc_iptm: 0.87, af3_iptm: 0.89, dG: -64.3, helix: 79, rmsd: 1.40 },
+];
+let stage = null;
+let currentComp = null;
+
+function initNGL() {
+    if (typeof NGL === 'undefined') return setTimeout(initNGL, 200);
+    const el = document.getElementById('ngl-stage');
+    if (!el) return;
+    stage = new NGL.Stage('ngl-stage', { backgroundColor: '#fafafa', quality: 'high', antialias: true });
+    window.addEventListener('resize', () => stage && stage.handleResize());
+    loadBinder(0);
+}
+async function loadBinder(i) {
+    if (!stage) return;
+    if (currentComp) stage.removeComponent(currentComp);
+    const b = binders[i];
+    currentComp = await stage.loadFile(b.pdb);
+    currentComp.addRepresentation('cartoon',    { sele: ':A', color: '#bbbbbb' });
+    currentComp.addRepresentation('surface',    { sele: ':A', color: '#cccccc', opacity: 0.22, surfaceType: 'av' });
+    currentComp.addRepresentation('cartoon',    { sele: ':B', color: 'residueindex', colorScale: 'rainbow' });
+    currentComp.addRepresentation('ball+stick', { sele: '(83:A or 193:A) and sidechainAttached', color: '#e63946' });
+    stage.autoView(800);
+
+    document.getElementById('ngl-name').textContent = `Rank ${i + 1} · ${b.name}`;
+    document.getElementById('ngl-info').innerHTML = `
+        <div class="ngl-info-row"><span class="lbl">Length</span><span class="val">${b.len} aa</span></div>
+        <div class="ngl-info-row"><span class="lbl">BC i_pTM</span><span class="val">${b.bc_iptm}</span></div>
+        <div class="ngl-info-row"><span class="lbl">AF3 ipTM</span><span class="val">${b.af3_iptm}</span></div>
+        <div class="ngl-info-row"><span class="lbl">ΔG</span><span class="val">${b.dG} kcal/mol</span></div>
+        <div class="ngl-info-row"><span class="lbl">Helix%</span><span class="val">${b.helix}%</span></div>
+        <div class="ngl-info-row"><span class="lbl">Hot RMSD</span><span class="val">${b.rmsd} Å</span></div>
+    `;
+    document.querySelectorAll('.ngl-btn').forEach((btn, idx) => btn.classList.toggle('active', idx === i));
+}
+document.querySelectorAll('.ngl-btn').forEach((btn, i) => {
+    btn.addEventListener('click', () => loadBinder(i));
+});
+initNGL();
+</script>
+
+</body>
+</html>

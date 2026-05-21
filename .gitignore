@@ -1,0 +1,5 @@
+.claude-design/
+*.tmp
+*.log
+.DS_Store
+Thumbs.db
