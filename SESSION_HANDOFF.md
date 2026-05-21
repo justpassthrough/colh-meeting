@@ -104,6 +104,7 @@ C:\Users\Andy\OneDrive\Desktop\Fire\de_novo\Claude_code_output\colh-meeting-v2\p
 ## ⚙️ 알려진 함정 (다음 Claude가 알아야)
 
 1. **CSS 셀렉터 변경 시 trailing space 유지 필수**: `#s14 .qa-main` (자손 셀렉터)와 `#s14.qa-main` (복합 셀렉터)는 완전히 다른 의미. `#sN ` → `#sM ` 변경 시 반드시 trailing space 포함. (지금까지 3번 깨졌음 — 2026-05-21 #s14→#s16 replace에서 다시 발생, 즉시 복구함)
+1-bis. **공유 컴포넌트 CSS가 슬라이드 ID에 묶여 있으면 새 슬라이드에서 깨짐**: 예) `#s10 .ngl-wrap { display: grid; ... }`가 Slide 10에만 grid 적용 → Slide 18에서 NGL stage 0×0 collapse. 해결: 셀렉터를 `#s10 .ngl-wrap, #s18 .ngl-wrap`처럼 모든 사용 슬라이드로 확장. (2026-05-21 commit 2640ee9)
 2. **NGL은 HTTP 서빙 필수**: `file://` 프로토콜로는 PDB CORS 실패 — Pages는 HTTPS라 OK
 3. **BindCraft 출력 PDB 잔기 재번호**:
    - ColH: 4ar1 A423/A533 = 출력 PDB의 A83/A193 (offset 340)
